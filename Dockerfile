@@ -11,13 +11,13 @@ RUN apt-get update && apt-get install -y \
     libpq-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy requirements and install
-# We install as 'user' to ensure proper permissions in HF environment
-COPY --chown=user backend/requirements.txt requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
+# Copy the entire project to preserve directory structure
+# (.dockerignore will skip frontend, .git, etc.)
+COPY --chown=user . .
 
-# Copy backend source code and ensure ownership
-COPY --chown=user backend/ .
+# Install dependencies from the backend directory
+WORKDIR /app/backend
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Hugging Face Spaces expects the app to listen on port 7860
 EXPOSE 7860
@@ -26,4 +26,5 @@ EXPOSE 7860
 USER user
 
 # Start FastAPI with the correct port for Hugging Face
+# main.py is in the current WORKDIR (/app/backend)
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "7860"]

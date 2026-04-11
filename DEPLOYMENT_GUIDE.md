@@ -1,29 +1,32 @@
-# DataWhisperer Deployment Guide (Free Tier Edition)
+# DataWhisperer Deployment Guide (Truly Free Edition)
 
-Follow these steps to deploy DataWhisperer using only **Free Services**: **Frontend on Vercel** and **Backend on Koyeb**.
+Follow these steps to deploy DataWhisperer using only **Truly Free Services**: **Frontend on Vercel** and **Backend on Hugging Face Spaces**.
 
-## Step 1: Deploy Backend (Koyeb) - [Free]
+## Step 1: Deploy Backend (Hugging Face Spaces) - [TRULY FREE]
 
-1.  Log in to [Koyeb](https://app.koyeb.com/). (No credit card required for the Starter tier).
-2.  Click **"Create Service"**.
-3.  Select **"GitHub"** as the source.
-4.  Choose your `prototype` repository.
-5.  **Service Settings:**
-    - **Instance Type:** Nano (Free).
-    - **Work Directory:** Set this to `backend`.
-    - **Build Strategy:** Docker-based (Koyeb will auto-detect the `Dockerfile`).
-6.  **Environment Variables:**
-    - Go to the **"App and service settings"** -> **"Environment variables"**.
-    - Add:
-        - `GROQ_API_KEY`: (Your Groq API key)
-        - `GROQ_API_KEYS`: (Comma-separated pool of keys)
-        - `PORT`: `8000`
-7.  Click **"Deploy"**.
-8.  Once deployed, copy your **Koyeb Service URL** (e.g., `https://datawhisperer-xxx.koyeb.app`).
+Hugging Face Spaces is 100% free and does **not** require a credit card.
+
+1.  Log in to [Hugging Face](https://huggingface.co/).
+2.  Go to **"Spaces"** -> **"Create New Space"**.
+3.  **Space Settings:**
+    - **Space Name:** `datawhisperer-api` (or any name you like).
+    - **SDK:** Select **Docker**.
+    - **Space Hardware:** Choose the free **"CPU Basic"** (2 vCPU, 16GB RAM).
+    - **Visibility:** Public (Recommended for prototype).
+4.  Once created, go to the **"Settings"** tab of your new Space.
+5.  Scroll down to **"Variables and Secrets"**.
+6.  Add these **Secrets** (not variables):
+    - `GROQ_API_KEY`: (Your Groq API key)
+    - `GROQ_API_KEYS`: (Comma-separated pool of keys)
+7.  Go to the **"Files"** tab, click **"New File"** if you want to upload manually, OR better:
+    - Click **"Settings"** -> **"Repository"** -> **"Sync from GitHub"**.
+    - Connect your GitHub account and select the `prototype` repository.
+8.  Hugging Face will automatically find the root-level `Dockerfile` and start building. It will listen on port `7860` automatically.
+9.  Once the status is **"Running"**, copy the URL of your Space. It will look like: `https://<username>-datawhisperer-api.hf.space`.
 
 ---
 
-## Step 2: Deploy Frontend (Vercel) - [Free]
+## Step 2: Deploy Frontend (Vercel) - [TRULY FREE]
 
 1.  Log in to [Vercel](https://vercel.com/dashboard).
 2.  Click **"Add New"** -> **"Project"**.
@@ -32,9 +35,8 @@ Follow these steps to deploy DataWhisperer using only **Free Services**: **Front
     - **Root Directory:** Set this to `frontend`.
     - **Framework Preset:** Next.js.
 5.  **Environment Variables:**
-    - Expand the "Environment Variables" section.
     - Add: `NEXT_PUBLIC_API_URL`
-    - Value: (Paste your **Koyeb Service URL** from Step 1).
+    - Value: (Paste your **Hugging Face Space URL** from Step 1).
 6.  Click **"Deploy"**.
 
 ---
@@ -43,8 +45,8 @@ Follow these steps to deploy DataWhisperer using only **Free Services**: **Front
 
 ### 1. Database
 - The backend uses a local `demo.db` (SQLite). 
-- **Warning:** On Koyeb's free tier, any data added to this database will be **wiped** whenever the service restarts.
-- **Solution:** For persistent storage, use a free PostgreSQL database from **Supabase** or **Neon**, and update the `DATABASE_URL` in your Koyeb environment variables.
+- **Warning:** On Hugging Face Spaces, any data added to this database will be **wiped** whenever the space sleeps or restarts.
+- **Solution:** For persistent storage, use a free PostgreSQL database from **Supabase** or **Neon**, and update the `DATABASE_URL` in your HF Space Secrets.
 
-### 2. Startup Time
-- The free "Nano" instance might take a minute to "wake up" if it hasn't been used. Please be patient on the first request.
+### 2. Space Sleep
+- Free Tier Spaces go to "sleep" after 48 hours of inactivity. The first person to visit the site after it sleeps will have to wait about 30–60 seconds for it to wake up.

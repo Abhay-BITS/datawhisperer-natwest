@@ -1,3 +1,12 @@
+---
+title: DataWhisperer API
+emoji: 🤫
+colorFrom: indigo
+colorTo: slate
+sdk: docker
+pinned: false
+---
+
 # DataWhisperer
 
 **Ask anything. Trust everything.**

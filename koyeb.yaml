@@ -1,0 +1,29 @@
+# Koyeb Deployment Configuration
+# More info: https://www.koyeb.com/docs/deployment-configuration
+
+name: datawhisperer
+services:
+  - name: backend
+    type: web
+    source:
+      git:
+        # Note: Koyeb will auto-fill the URL and branch when you link the repo
+        workdir: backend
+        docker:
+          dockerfile: Dockerfile
+    instance_type: nano
+    regions:
+      - fra
+    ports:
+      - port: 8000
+        protocol: http
+    routes:
+      - path: /
+        port: 8000
+    env:
+      - key: PORT
+        value: "8000"
+      - key: GROQ_API_KEY
+        type: secret
+      - key: GROQ_API_KEYS
+        type: secret

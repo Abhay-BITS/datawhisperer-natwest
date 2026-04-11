@@ -94,6 +94,7 @@ html, body {
 
 .animate-fade-in { animation: fade-in 0.3s ease forwards; }
 .animate-slide-in { animation: slide-in 0.3s ease forwards; }
+.spin-slow { animation: spin-slow 0.75s linear infinite; }
 
 .pulse-dot {
   width: 8px;

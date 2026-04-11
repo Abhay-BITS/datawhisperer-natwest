@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { getSources, deleteSource, cloneSources } from '@/lib/api';
+import { getSources, deleteSource } from '@/lib/api';
 import type { DataSource } from '@/lib/types';
 import { useAuth } from '@/hooks/useAuth';
 import { useOnboarding } from '@/hooks/useOnboarding';
@@ -16,7 +16,7 @@ const DB_ICONS: Record<string, string> = {
 };
 
 export default function SourcesPage() {
-  const { isAuthenticated, sessionId, username, isLoading, signOut, createNewChat } = useAuth();
+  const { isAuthenticated, username, isLoading, signOut, switchSession } = useAuth();
   const { nextStep } = useOnboarding();
   const router = useRouter();
   const [sources, setSources] = useState<DataSource[]>([]);
@@ -49,18 +49,11 @@ export default function SourcesPage() {
     setShowWizard(false);
   };
 
-  const handleStartChat = async (targetSourceId?: string) => {
-    const fromId = DRAFT_SESSION_ID;
-    const toId = createNewChat();
-    
-    if (sources.length > 0) {
-      await cloneSources(fromId, toId);
-    }
-    
+  const handleStartChat = (targetSourceId?: string) => {
+    // Switch the active session to the draft session — sources are already there.
+    // No network clone needed; navigation is instant.
+    switchSession(DRAFT_SESSION_ID);
     if (targetSourceId) {
-      // Find the cloned source ID for the target
-      // This is a bit tricky, but for simplicity we can just navigate 
-      // the backend will handle the query
       router.push(`/chat?source_id=${targetSourceId}`);
     } else {
       router.push('/chat');
@@ -149,8 +142,8 @@ export default function SourcesPage() {
             gap: 12,
             backdropFilter: 'blur(8px)',
           }}>
-            <div style={{ 
-              width: 24, height: 24, borderRadius: '50%', background: 'var(--accent-dim)', 
+            <div style={{
+              width: 24, height: 24, borderRadius: '50%', background: 'var(--accent-dim)',
               display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--accent)',
               flexShrink: 0
             }}>
@@ -274,8 +267,8 @@ export default function SourcesPage() {
           </div>
 
           {/* Supported DBs */}
-          <div style={{ 
-            display: 'flex', justifyContent: 'center', gap: '2.5rem', flexWrap: 'wrap', 
+          <div style={{
+            display: 'flex', justifyContent: 'center', gap: '2.5rem', flexWrap: 'wrap',
             marginBottom: '2rem', opacity: 0.9
           }}>
             {Object.entries(DB_ICONS).map(([name, icon]) => (
@@ -289,20 +282,20 @@ export default function SourcesPage() {
           {/* Features */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1rem', maxWidth: 960, margin: '0 auto' }}>
             {[
-              { 
-                title: 'Semantic Search', 
-                desc: 'Deep contextual understanding of your data schemas and relationships beyond just keyword matching.', 
-                icon: 'zoom-question' 
+              {
+                title: 'Semantic Search',
+                desc: 'Deep contextual understanding of your data schemas and relationships beyond just keyword matching.',
+                icon: 'zoom-question'
               },
-              { 
-                title: 'Self-Correcting Queries', 
-                desc: 'Our system automatically detects and fixes query errors in real-time for perfectly accurate results.', 
-                icon: 'wand' 
+              {
+                title: 'Self-Correcting Queries',
+                desc: 'Our system automatically detects and fixes query errors in real-time for perfectly accurate results.',
+                icon: 'wand'
               },
-              { 
-                title: 'Advanced Analysis Modes', 
-                desc: 'Switch between Quick, Deep, and Compare modes to tailor the analysis depth to your specific needs.', 
-                icon: 'adjustments-horizontal' 
+              {
+                title: 'Advanced Analysis Modes',
+                desc: 'Switch between Quick, Deep, and Compare modes to tailor the analysis depth to your specific needs.',
+                icon: 'adjustments-horizontal'
               },
             ].map(f => (
               <div key={f.title} style={{
@@ -310,8 +303,8 @@ export default function SourcesPage() {
                 borderRadius: 12, padding: '1rem', display: 'flex', flexDirection: 'column', gap: 10,
                 transition: 'transform 0.2s, border-color 0.2s',
               }}>
-                <div style={{ 
-                  width: 32, height: 32, borderRadius: 8, background: 'var(--accent-dim)', 
+                <div style={{
+                  width: 32, height: 32, borderRadius: 8, background: 'var(--accent-dim)',
                   display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--accent)'
                 }}>
                   <img src={`https://cdn.jsdelivr.net/npm/@tabler/icons/icons/${f.icon}.svg`} alt={f.icon} style={{ width: 18, height: 18 }} />

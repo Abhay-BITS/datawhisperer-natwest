@@ -47,27 +47,38 @@ async def chat(body: dict):
                 "db_type": s.db_type.value,
                 "schema": s.schema
             } for s in sources],
+            # Semantic stage
             "resolved_question": "",
+            "intent_type": "aggregation",
             "metric_mappings": {},
             "assumptions": [],
             "selected_sources": [],
             "cross_db_query": False,
+            "available_table_names": [],
+            # Audit stage
             "audit_result": None,
+            # Code generation stage
             "generated_code": "",
             "code_type": "sql",
             "code_explanation": "",
+            "tables_used": [],
             "retry_count": 0,
+            # Execution stage
             "execution_result": None,
             "execution_error": None,
+            # Verification stage
             "is_verified": False,
             "verification_note": "",
+            "value_plausible": True,
+            # Confidence stage
             "confidence_score": None,
             "confidence_reasoning": None,
+            # Output stage
             "insight_narrative": "",
             "visualization": {},
             "suggested_followups": [],
             "trust_trace": [],
-            "final_error": None
+            "final_error": None,
         }
 
         state = compiled_graph.invoke(initial_state)

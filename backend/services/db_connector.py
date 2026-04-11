@@ -28,6 +28,7 @@ class DataSource:
     connected_at: str
     table_count: int
     session_id: str
+    config: dict  # raw connection config — used for session cloning
 
 class DBConnector:
 
@@ -89,7 +90,7 @@ class DBConnector:
             schema = self._schema_from_df(df, safe_name)
             return DataSource(source_id, name, safe_name, db_type, f"csv://{name}",
                               None, conn, df, schema, True,
-                              datetime.utcnow().isoformat(), 1, session_id)
+                              datetime.utcnow().isoformat(), 1, session_id, cfg)
 
         elif db_type == DBType.EXCEL:
             df = pd.read_excel(cfg["file_path"])

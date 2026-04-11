@@ -622,7 +622,10 @@ function ChatPageInner() {
       {showWizard && (
         <AddSourceWizard
           sessionId={sessionId}
-          onClose={() => setShowWizard(false)}
+          onClose={() => {
+            setShowWizard(false);
+            fetchSources(); // always refresh — catches CSV/Excel uploads closed mid-flow
+          }}
           onAdded={() => {
             setShowWizard(false);
             fetchSources();

@@ -98,14 +98,29 @@ def _build_table_guide(schemas: list) -> tuple[str, str]:
     """
     lines = []
     db_type = "csv"  # default
+    is_cross_db = len(schemas) > 1
 
     for schema in schemas:
         db_type = schema.get("db_type", "csv")
+        s_safe_name = schema.get("safe_name", "source")
+        
         for tname, tinfo in schema.get("tables", {}).items():
             cols = ", ".join(c["name"] for c in tinfo.get("columns", []))
             row_count = tinfo.get("row_count", "?")
+            
+            # Logic must match services/data_engine.py: _cross_db_execute
+            if is_cross_db:
+                if db_type in ("csv", "excel"):
+                    # For files, the source is the table
+                    final_name = s_safe_name
+                else:
+                    # For databases, prefix with source name
+                    final_name = f"{s_safe_name}_{tname}"
+            else:
+                final_name = tname
+
             lines.append(
-                f'  Table name to use in SQL: "{tname}"  '
+                f'  Table name to use in SQL: "{final_name}"  '
                 f"({row_count} rows) | Columns: {cols}"
             )
 

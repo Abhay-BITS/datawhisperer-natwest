@@ -100,28 +100,28 @@ async def get_sample_creds(db_type: str):
         if db_type == "postgresql":
             return {
                 "source_name": "Supabase Bank Sample",
-                "host": os.environ.get("SUPABASE_HOST"),
+                "host": os.environ.get("SUPABASE_HOST") or "aws-1-ap-northeast-1.pooler.supabase.com",
                 "port": os.environ.get("SUPABASE_PORT", "5432"),
                 "database": os.environ.get("SUPABASE_DATABASE", "postgres"),
-                "username": os.environ.get("SUPABASE_USER"),
-                "password": os.environ.get("SUPABASE_PASSWORD")
+                "username": os.environ.get("SUPABASE_USER") or "postgres.vxtwzsbilfhesjjfmyfn",
+                "password": os.environ.get("SUPABASE_PASSWORD") or ",qVcG5wy!cuv8%e"
             }
         elif db_type == "mysql":
             return {
                 "source_name": "TiDB Loan Sample",
-                "host": os.environ.get("TIDB_HOST"),
+                "host": os.environ.get("TIDB_HOST") or "gateway01.ap-northeast-1.prod.aws.tidbcloud.com",
                 "port": os.environ.get("TIDB_PORT", "4000"),
                 "database": os.environ.get("TIDB_DATABASE", "fortune500"),
-                "username": os.environ.get("TIDB_USER"),
-                "password": os.environ.get("TIDB_PASSWORD")
+                "username": os.environ.get("TIDB_USER") or "4EAk1F2wqVEz2MM.root",
+                "password": os.environ.get("TIDB_PASSWORD") or "CnzovqaSn1FkaZHx"
             }
         elif db_type == "sqlite":
-            turso_host = os.environ.get("TURSO_HOST")
+            turso_host = os.environ.get("TURSO_HOST") or "datawhisperer-abhay070.aws-ap-northeast-1.turso.io"
             if turso_host:
                 return {
                     "source_name": "Turso Fraud Sample",
                     "host": turso_host,
-                    "password": os.environ.get("TURSO_AUTH_TOKEN")
+                    "password": os.environ.get("TURSO_AUTH_TOKEN") or "eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJhIjoicnciLCJpYXQiOjE3NzU4MjE1NjQsImlkIjoiMDE5ZDc3MzYtNTYwMS03OGQwLWI5Y2UtNDZiZjUwYmQzMTUwIiwicmlkIjoiYWYyYjI4MGUtMjFkNy00MGZmLWI5YjAtYThiYWU4MmVlYTExIn0.R-62ruHgZcx5uYR6YlzQi6MmTqEWnwM904EBaNENlUwbegU8GOjH-9ciFYncVyHEfosE-l9GO3_2i6gXxVXKBA"
                 }
         return JSONResponse(status_code=404, content={"error": "Sample not configured for this type"})
     except Exception as e:

@@ -29,7 +29,12 @@ async def connect_source(body: dict):
     try:
         db_type = DBType(body["db_type"])
         selected_tables = body.get("selected_tables")
-        source = connector.connect(db_type, body.get("config", {}), body["name"], body["session_id"], selected_tables)
+        name = body.get("name", "Unnamed Source")
+        session_id = body.get("session_id")
+        if not session_id:
+            return JSONResponse(status_code=400, content={"error": "session_id is required"})
+            
+        source = connector.connect(db_type, body.get("config", {}), name, session_id, selected_tables)
         add_source(source)
         return {
             "source_id": source.source_id,

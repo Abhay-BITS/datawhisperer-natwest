@@ -1,0 +1,7 @@
+backend/
+sample_data/
+docs/
+docker-compose.yml
+.git/
+.env*
+!frontend/

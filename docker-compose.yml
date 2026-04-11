@@ -1,0 +1,54 @@
+version: '3.9'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: datawhisperer-backend
+    ports:
+      - "8000:8000"
+    environment:
+      - GROQ_API_KEYS=${GROQ_API_KEYS}
+      - FEEDBACK_EMAIL=${FEEDBACK_EMAIL}
+      - SMTP_HOST=${SMTP_HOST}
+      - SMTP_PORT=${SMTP_PORT}
+      - SMTP_USER=${SMTP_USER}
+      - SMTP_PASS=${SMTP_PASS}
+      - SUPABASE_HOST=${SUPABASE_HOST}
+      - SUPABASE_USER=${SUPABASE_USER}
+      - SUPABASE_PASSWORD=${SUPABASE_PASSWORD}
+      - SUPABASE_PORT=${SUPABASE_PORT}
+      - SUPABASE_DATABASE=${SUPABASE_DATABASE}
+      - TIDB_HOST=${TIDB_HOST}
+      - TIDB_USER=${TIDB_USER}
+      - TIDB_PASSWORD=${TIDB_PASSWORD}
+      - TIDB_PORT=${TIDB_PORT}
+      - TIDB_DATABASE=${TIDB_DATABASE}
+      - TURSO_HOST=${TURSO_HOST}
+      - TURSO_AUTH_TOKEN=${TURSO_AUTH_TOKEN}
+    volumes:
+      - ./sample_data:/app/sample_data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: datawhisperer-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://backend:8000
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+networks:
+  default:
+    name: datawhisperer-network

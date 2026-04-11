@@ -1,0 +1,51 @@
+emp_id,name,department,role,region,hire_date,salary,status,manager_id,age
+E001,Alice Johnson,Engineering,Senior Engineer,North,2019-03-15,95000,active,E010,34
+E002,Bob Smith,Sales,Account Executive,South,2020-07-22,72000,active,E011,29
+E003,Carol White,Marketing,Marketing Manager,East,2018-01-10,88000,active,E012,38
+E004,David Lee,Engineering,Junior Engineer,North,2022-05-30,65000,active,E001,26
+E005,Emma Davis,HR,HR Specialist,West,2021-02-14,68000,active,E013,31
+E006,Frank Miller,Sales,Sales Director,South,2017-09-01,115000,active,E014,44
+E007,Grace Wilson,Engineering,DevOps Engineer,North,2020-11-18,92000,active,E010,32
+E008,Henry Moore,Finance,Financial Analyst,East,2021-06-07,78000,active,E015,28
+E009,Iris Taylor,Marketing,Content Strategist,East,2022-01-25,62000,active,E003,27
+E010,James Anderson,Engineering,VP Engineering,North,2015-04-12,145000,active,,48
+E011,Karen Thomas,Sales,VP Sales,South,2016-08-20,138000,active,,45
+E012,Liam Jackson,Marketing,CMO,East,2014-11-30,155000,active,,50
+E013,Maya Harris,HR,HR Director,West,2018-03-05,108000,active,,42
+E014,Noah Martin,Sales,Regional Director,South,2016-02-28,122000,active,E011,46
+E015,Olivia Garcia,Finance,CFO,East,2013-07-15,168000,active,,52
+E016,Peter Robinson,Engineering,Senior Engineer,North,2019-09-10,98000,active,E010,35
+E017,Quinn Lewis,Sales,Account Executive,West,2021-04-18,70000,active,E011,30
+E018,Rachel Clark,Engineering,Data Engineer,North,2020-08-25,90000,active,E010,33
+E019,Samuel Rodriguez,Finance,Controller,East,2019-12-01,85000,active,E015,37
+E020,Tina Walker,Marketing,Digital Marketer,East,2022-03-14,60000,active,E003,25
+E021,Uma Hall,HR,Recruiter,West,2021-10-05,58000,active,E013,28
+E022,Victor Allen,Sales,Account Manager,South,2020-02-17,76000,active,E011,33
+E023,Wendy Young,Engineering,ML Engineer,North,2021-07-12,105000,active,E010,30
+E024,Xander King,Finance,Budget Analyst,East,2022-06-20,63000,active,E015,26
+E025,Yvonne Wright,Marketing,Brand Manager,East,2019-05-08,82000,active,E003,36
+E026,Zachary Scott,Sales,Sales Rep,South,2022-09-01,58000,active,E011,24
+E027,Amy Green,Engineering,Backend Engineer,North,2020-04-15,88000,active,E010,31
+E028,Brian Adams,HR,HR Business Partner,West,2019-11-22,74000,active,E013,36
+E029,Catherine Baker,Sales,Enterprise AE,South,2018-06-14,96000,active,E011,40
+E030,Daniel Carter,Finance,Tax Specialist,East,2021-01-30,72000,active,E015,29
+E031,Elizabeth Evans,Engineering,Frontend Engineer,North,2021-08-19,85000,active,E010,28
+E032,Frederick Hill,Marketing,SEO Specialist,East,2022-04-11,59000,active,E003,26
+E033,Georgia Collins,Sales,Regional Manager,West,2017-03-25,102000,active,E011,43
+E034,Harold Nelson,Engineering,Security Engineer,North,2019-07-08,95000,active,E010,35
+E035,Isabella Mitchell,HR,L&D Specialist,West,2020-09-14,65000,active,E013,32
+E036,Jason Parker,Finance,Investment Analyst,East,2018-12-03,89000,active,E015,38
+E037,Katherine Stewart,Marketing,PR Manager,East,2017-08-17,86000,active,E003,41
+E038,Leonard Morris,Sales,SDR,South,2023-01-09,52000,active,E011,23
+E039,Michelle Rogers,Engineering,QA Engineer,North,2021-03-22,78000,active,E010,29
+E040,Nathan Reed,Finance,AP Specialist,East,2022-07-15,58000,active,E015,25
+E041,Ophelia Cook,Sales,Account Executive,West,2020-10-28,71000,churned,E011,31
+E042,Patrick Morgan,Engineering,SRE,North,2019-02-11,94000,churned,E010,34
+E043,Queenie Bell,HR,HR Coordinator,West,2021-05-20,54000,churned,E013,27
+E044,Raymond Murphy,Marketing,Campaign Manager,East,2018-10-06,80000,churned,E003,39
+E045,Stephanie Bailey,Sales,Enterprise AE,South,2016-12-14,98000,churned,E011,42
+E046,Thomas Rivera,Engineering,Backend Engineer,North,2020-06-03,87000,churned,E010,32
+E047,Ursula Cox,Finance,Payroll Analyst,East,2021-09-28,61000,churned,E015,28
+E048,Vincent Ward,Sales,Sales Manager,South,2017-07-19,108000,churned,E011,44
+E049,Wanda Peterson,Marketing,Social Media Mgr,East,2022-02-07,57000,churned,E003,25
+E050,Xavier Gray,Engineering,Platform Engineer,North,2019-04-30,91000,churned,E010,33

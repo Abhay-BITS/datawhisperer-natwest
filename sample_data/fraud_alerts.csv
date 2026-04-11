@@ -1,0 +1,151 @@
+alert_id,customer_id,account_id,region,bank_name,alert_date,alert_type,risk_level,transaction_amount,status,is_confirmed_fraud,resolution_time_hours,detection_source
+ALRT00001,CUST00049,ACC010000048,Central,Axis Bank,2024-01-20,High Amount,Low,82187.4,Escalated,False,23,Customer Report
+ALRT00002,CUST00046,ACC010000045,South,Kotak Bank,2024-08-04,Multiple Attempts,Medium,37608.28,False Positive,False,71,Customer Report
+ALRT00003,CUST00003,ACC010000002,West,HDFC Bank,2023-11-06,Account Takeover,Critical,112076.57,False Positive,True,4,Rule Engine
+ALRT00004,CUST00010,ACC010000009,West,HDFC Bank,2023-09-26,Account Takeover,Critical,25273.3,Escalated,False,23,Customer Report
+ALRT00005,CUST00045,ACC010000044,South,Axis Bank,2024-10-22,Card Cloning,Low,24311.26,Escalated,False,9,Manual Review
+ALRT00006,CUST00038,ACC010000037,Central,SBI,2024-05-07,Velocity Check,High,125785.21,False Positive,True,48,Rule Engine
+ALRT00007,CUST00017,ACC010000016,Central,SBI,2023-06-16,Unusual Location,Medium,64276.38,Under Review,False,21,Rule Engine
+ALRT00008,CUST00018,ACC010000017,North,SBI,2024-01-05,Velocity Check,High,10218.62,Escalated,True,66,ML Model
+ALRT00009,CUST00050,ACC010000049,Central,Kotak Bank,2024-10-05,Multiple Attempts,Low,119953.12,Under Review,False,41,Manual Review
+ALRT00010,CUST00018,ACC010000017,North,SBI,2024-12-02,Phishing,Low,107116.85,Escalated,True,2,ML Model
+ALRT00011,CUST00034,ACC010000033,South,HDFC Bank,2023-10-16,Phishing,Critical,82692.9,Under Review,True,28,ML Model
+ALRT00012,CUST00033,ACC010000032,West,HDFC Bank,2023-08-15,Card Cloning,Low,83760.58,Resolved,True,17,Rule Engine
+ALRT00013,CUST00031,ACC010000030,North,Kotak Bank,2023-12-23,Account Takeover,High,28233.29,False Positive,False,23,Manual Review
+ALRT00014,CUST00002,ACC010000001,Central,Axis Bank,2023-05-02,Card Cloning,Medium,171434.63,Under Review,True,40,ML Model
+ALRT00015,CUST00014,ACC010000013,South,ICICI Bank,2023-05-14,High Amount,Critical,138318.22,Resolved,True,3,Customer Report
+ALRT00016,CUST00049,ACC010000048,Central,Axis Bank,2024-03-17,Unusual Location,Medium,22009.57,Blocked,True,61,Rule Engine
+ALRT00017,CUST00017,ACC010000016,Central,SBI,2023-02-14,High Amount,High,133683.49,Resolved,True,27,ML Model
+ALRT00018,CUST00012,ACC010000011,North,HDFC Bank,2024-11-17,Phishing,Low,18610.47,Escalated,False,46,ML Model
+ALRT00019,CUST00033,ACC010000032,West,HDFC Bank,2024-09-19,Card Cloning,Low,20271.58,Blocked,True,68,ML Model
+ALRT00020,CUST00046,ACC010000045,South,Kotak Bank,2023-07-16,Account Takeover,Medium,180381.23,Blocked,True,13,ML Model
+ALRT00021,CUST00033,ACC010000032,West,HDFC Bank,2024-12-25,Device Mismatch,High,139777.51,Under Review,False,14,ML Model
+ALRT00022,CUST00023,ACC010000022,Central,Axis Bank,2024-01-24,Velocity Check,Medium,103093.08,False Positive,True,41,Rule Engine
+ALRT00023,CUST00030,ACC010000029,East,Axis Bank,2023-04-23,Multiple Attempts,Critical,152573.6,Escalated,True,11,Manual Review
+ALRT00024,CUST00032,ACC010000031,East,SBI,2023-04-29,Velocity Check,High,91660.68,Escalated,False,29,Customer Report
+ALRT00025,CUST00019,ACC010000018,West,ICICI Bank,2024-03-14,Card Cloning,Low,179003.55,False Positive,False,23,Rule Engine
+ALRT00026,CUST00044,ACC010000043,Central,SBI,2024-05-18,High Amount,Critical,87892.64,Resolved,True,19,Customer Report
+ALRT00027,CUST00026,ACC010000025,North,HDFC Bank,2024-12-12,High Amount,Medium,13409.73,Under Review,False,26,Customer Report
+ALRT00028,CUST00008,ACC010000007,South,SBI,2023-08-27,Velocity Check,Critical,56064.41,Blocked,False,52,Manual Review
+ALRT00029,CUST00031,ACC010000030,North,Kotak Bank,2024-11-13,Velocity Check,Critical,102527.2,Under Review,False,14,Rule Engine
+ALRT00030,CUST00017,ACC010000016,Central,SBI,2024-05-16,Device Mismatch,Medium,125860.02,Under Review,True,13,Rule Engine
+ALRT00031,CUST00005,ACC010000004,West,SBI,2024-05-25,Unusual Location,Medium,76835.28,Escalated,True,39,Rule Engine
+ALRT00032,CUST00049,ACC010000048,Central,Axis Bank,2023-03-20,Device Mismatch,Critical,40785.39,False Positive,False,65,Manual Review
+ALRT00033,CUST00035,ACC010000034,West,SBI,2023-12-18,Unusual Location,Low,198146.96,Resolved,False,58,Manual Review
+ALRT00034,CUST00025,ACC010000024,Central,SBI,2024-03-29,Device Mismatch,Low,7055.53,Blocked,False,22,Customer Report
+ALRT00035,CUST00028,ACC010000027,Central,SBI,2023-05-18,Account Takeover,Critical,97747.26,Resolved,False,71,Customer Report
+ALRT00036,CUST00031,ACC010000030,North,Kotak Bank,2024-07-29,Multiple Attempts,Low,78581.27,False Positive,False,46,Manual Review
+ALRT00037,CUST00021,ACC010000020,Central,HDFC Bank,2023-03-04,Unusual Location,Low,26075.51,Escalated,False,4,Manual Review
+ALRT00038,CUST00025,ACC010000024,Central,SBI,2023-04-10,Velocity Check,High,198393.13,False Positive,False,8,ML Model
+ALRT00039,CUST00016,ACC010000015,West,Axis Bank,2023-08-29,Account Takeover,Low,182122.61,Resolved,False,15,Manual Review
+ALRT00040,CUST00011,ACC010000010,North,Axis Bank,2023-01-21,Phishing,Low,92451.42,False Positive,False,35,Rule Engine
+ALRT00041,CUST00045,ACC010000044,South,Axis Bank,2024-04-25,Unusual Location,High,75858.65,False Positive,False,13,Customer Report
+ALRT00042,CUST00007,ACC010000006,South,ICICI Bank,2024-12-08,Card Cloning,High,99597.91,Escalated,True,39,Manual Review
+ALRT00043,CUST00028,ACC010000027,Central,SBI,2023-07-26,Device Mismatch,Low,168155.91,Blocked,True,37,Manual Review
+ALRT00044,CUST00004,ACC010000003,Central,ICICI Bank,2023-11-01,Velocity Check,Medium,125102.17,Resolved,True,44,Manual Review
+ALRT00045,CUST00005,ACC010000004,West,SBI,2024-08-03,Device Mismatch,Critical,42342.96,Resolved,False,65,Manual Review
+ALRT00046,CUST00028,ACC010000027,Central,SBI,2024-11-10,Phishing,Medium,83155.69,Escalated,False,71,ML Model
+ALRT00047,CUST00002,ACC010000001,Central,Axis Bank,2024-10-04,Multiple Attempts,Critical,42984.08,False Positive,False,69,Customer Report
+ALRT00048,CUST00037,ACC010000036,East,Kotak Bank,2024-10-03,Unusual Location,Medium,73172.8,Under Review,True,20,Manual Review
+ALRT00049,CUST00028,ACC010000027,Central,SBI,2024-02-25,Phishing,Low,126968.53,False Positive,False,37,ML Model
+ALRT00050,CUST00017,ACC010000016,Central,SBI,2024-12-04,Card Cloning,Critical,48077.44,Under Review,True,4,ML Model
+ALRT00051,CUST00020,ACC010000019,West,ICICI Bank,2024-04-20,Device Mismatch,Critical,84692.82,Resolved,True,21,Manual Review
+ALRT00052,CUST00009,ACC010000008,Central,ICICI Bank,2023-01-30,Account Takeover,High,131904.81,Under Review,True,63,Rule Engine
+ALRT00053,CUST00004,ACC010000003,Central,ICICI Bank,2023-03-27,Phishing,High,173500.77,False Positive,False,12,Customer Report
+ALRT00054,CUST00047,ACC010000046,East,Kotak Bank,2023-05-24,Card Cloning,Low,114409.19,Blocked,True,67,Manual Review
+ALRT00055,CUST00032,ACC010000031,East,SBI,2023-04-03,Card Cloning,Low,154751.58,Escalated,False,50,ML Model
+ALRT00056,CUST00028,ACC010000027,Central,SBI,2023-08-12,Multiple Attempts,Low,35443.27,Escalated,False,53,Manual Review
+ALRT00057,CUST00038,ACC010000037,Central,SBI,2023-02-27,Device Mismatch,High,140073.74,Resolved,False,70,Customer Report
+ALRT00058,CUST00031,ACC010000030,North,Kotak Bank,2024-11-30,Card Cloning,High,175946.99,Under Review,False,61,Manual Review
+ALRT00059,CUST00020,ACC010000019,West,ICICI Bank,2023-01-22,Unusual Location,Low,138291.15,Under Review,False,71,Customer Report
+ALRT00060,CUST00020,ACC010000019,West,ICICI Bank,2024-10-16,Phishing,Low,107214.68,Under Review,False,50,Rule Engine
+ALRT00061,CUST00026,ACC010000025,North,HDFC Bank,2023-09-19,Account Takeover,Low,187296.32,Under Review,False,27,ML Model
+ALRT00062,CUST00029,ACC010000028,East,Kotak Bank,2024-10-08,Phishing,Critical,157968.82,Escalated,True,63,Customer Report
+ALRT00063,CUST00048,ACC010000047,South,HDFC Bank,2024-02-27,Phishing,Critical,175413.86,Resolved,True,34,Rule Engine
+ALRT00064,CUST00023,ACC010000022,Central,Axis Bank,2024-03-06,Phishing,Critical,139194.41,Resolved,True,57,ML Model
+ALRT00065,CUST00001,ACC010000000,East,ICICI Bank,2024-02-15,Card Cloning,High,63087.5,Resolved,True,21,ML Model
+ALRT00066,CUST00034,ACC010000033,South,HDFC Bank,2024-12-31,Multiple Attempts,Critical,158632.14,Escalated,False,62,ML Model
+ALRT00067,CUST00017,ACC010000016,Central,SBI,2023-06-27,Phishing,High,40133.41,False Positive,False,24,Customer Report
+ALRT00068,CUST00025,ACC010000024,Central,SBI,2024-08-07,Card Cloning,Low,189647.79,Blocked,True,12,Customer Report
+ALRT00069,CUST00013,ACC010000012,North,Axis Bank,2023-09-26,Multiple Attempts,Low,80506.46,False Positive,False,20,Rule Engine
+ALRT00070,CUST00024,ACC010000023,East,SBI,2023-06-24,High Amount,Low,143857.39,False Positive,False,64,Rule Engine
+ALRT00071,CUST00015,ACC010000014,South,ICICI Bank,2024-12-31,Card Cloning,Medium,189237.44,Escalated,False,64,Customer Report
+ALRT00072,CUST00009,ACC010000008,Central,ICICI Bank,2024-03-17,Card Cloning,Medium,199043.89,Escalated,True,54,ML Model
+ALRT00073,CUST00027,ACC010000026,North,SBI,2023-05-30,Unusual Location,High,195237.57,Under Review,False,32,Manual Review
+ALRT00074,CUST00038,ACC010000037,Central,SBI,2024-12-01,Device Mismatch,Low,2558.89,Under Review,False,51,ML Model
+ALRT00075,CUST00046,ACC010000045,South,Kotak Bank,2024-01-28,Velocity Check,High,15074.6,Blocked,True,7,Manual Review
+ALRT00076,CUST00016,ACC010000015,West,Axis Bank,2024-04-27,Phishing,Low,1569.52,Blocked,False,39,Customer Report
+ALRT00077,CUST00043,ACC010000042,Central,SBI,2024-01-15,Multiple Attempts,Low,116307.14,Escalated,True,65,Customer Report
+ALRT00078,CUST00022,ACC010000021,West,ICICI Bank,2024-04-24,Multiple Attempts,Low,63804.82,Blocked,False,19,Manual Review
+ALRT00079,CUST00008,ACC010000007,South,SBI,2023-11-17,Unusual Location,Medium,100092.52,Escalated,False,56,Manual Review
+ALRT00080,CUST00017,ACC010000016,Central,SBI,2024-09-19,Account Takeover,High,87437.19,Under Review,False,63,ML Model
+ALRT00081,CUST00036,ACC010000035,North,ICICI Bank,2024-11-04,Device Mismatch,Low,38189.53,Resolved,True,24,Rule Engine
+ALRT00082,CUST00031,ACC010000030,North,Kotak Bank,2023-09-24,Multiple Attempts,Critical,87567.76,False Positive,True,57,Manual Review
+ALRT00083,CUST00046,ACC010000045,South,Kotak Bank,2024-07-28,Device Mismatch,Critical,98851.22,Under Review,True,45,Rule Engine
+ALRT00084,CUST00014,ACC010000013,South,ICICI Bank,2023-10-18,Multiple Attempts,Medium,150112.36,Escalated,True,1,ML Model
+ALRT00085,CUST00027,ACC010000026,North,SBI,2023-03-20,Card Cloning,Critical,135543.25,Escalated,True,37,Rule Engine
+ALRT00086,CUST00026,ACC010000025,North,HDFC Bank,2024-01-18,High Amount,High,31178.21,Resolved,False,62,Customer Report
+ALRT00087,CUST00041,ACC010000040,North,Kotak Bank,2023-10-03,Unusual Location,High,193969.22,Blocked,False,42,ML Model
+ALRT00088,CUST00014,ACC010000013,South,ICICI Bank,2023-02-19,Account Takeover,High,159730.32,Resolved,False,12,Customer Report
+ALRT00089,CUST00017,ACC010000016,Central,SBI,2023-07-02,Card Cloning,Critical,18293.07,Under Review,True,50,Customer Report
+ALRT00090,CUST00019,ACC010000018,West,ICICI Bank,2024-10-24,Multiple Attempts,Low,60060.06,False Positive,False,17,Manual Review
+ALRT00091,CUST00043,ACC010000042,Central,SBI,2023-04-09,Phishing,Medium,98179.8,False Positive,False,35,Customer Report
+ALRT00092,CUST00006,ACC010000005,East,Axis Bank,2024-03-08,Phishing,Medium,87104.13,False Positive,True,6,Manual Review
+ALRT00093,CUST00030,ACC010000029,East,Axis Bank,2024-11-23,Card Cloning,Medium,186168.19,Blocked,True,38,Customer Report
+ALRT00094,CUST00028,ACC010000027,Central,SBI,2023-03-23,Device Mismatch,High,30147.0,Under Review,False,32,Customer Report
+ALRT00095,CUST00019,ACC010000018,West,ICICI Bank,2024-08-05,Unusual Location,Low,183501.75,Blocked,True,66,Customer Report
+ALRT00096,CUST00027,ACC010000026,North,SBI,2023-04-07,Device Mismatch,High,71413.8,Blocked,True,65,Rule Engine
+ALRT00097,CUST00008,ACC010000007,South,SBI,2024-11-08,Device Mismatch,Medium,157342.33,False Positive,True,11,Customer Report
+ALRT00098,CUST00046,ACC010000045,South,Kotak Bank,2023-11-01,Phishing,Critical,151592.18,False Positive,False,44,ML Model
+ALRT00099,CUST00014,ACC010000013,South,ICICI Bank,2023-07-09,High Amount,High,174387.35,Resolved,False,69,Rule Engine
+ALRT00100,CUST00001,ACC010000000,East,ICICI Bank,2024-02-09,High Amount,Low,34761.2,False Positive,False,52,Customer Report
+ALRT00101,CUST00020,ACC010000019,West,ICICI Bank,2024-09-25,Phishing,Critical,161025.83,Resolved,True,18,Rule Engine
+ALRT00102,CUST00013,ACC010000012,North,Axis Bank,2023-04-25,Unusual Location,Medium,171872.9,Under Review,False,19,ML Model
+ALRT00103,CUST00028,ACC010000027,Central,SBI,2024-10-03,Card Cloning,Low,60533.11,False Positive,True,61,Customer Report
+ALRT00104,CUST00002,ACC010000001,Central,Axis Bank,2023-04-30,Multiple Attempts,Medium,147886.85,False Positive,False,61,Rule Engine
+ALRT00105,CUST00029,ACC010000028,East,Kotak Bank,2024-08-22,Card Cloning,Medium,59318.87,False Positive,True,43,Rule Engine
+ALRT00106,CUST00007,ACC010000006,South,ICICI Bank,2024-10-07,Velocity Check,Critical,169798.94,Blocked,False,5,Customer Report
+ALRT00107,CUST00026,ACC010000025,North,HDFC Bank,2024-05-12,Device Mismatch,Medium,143000.92,Blocked,True,55,Manual Review
+ALRT00108,CUST00036,ACC010000035,North,ICICI Bank,2023-03-07,Account Takeover,Critical,177883.55,Resolved,False,45,Customer Report
+ALRT00109,CUST00045,ACC010000044,South,Axis Bank,2024-03-22,Unusual Location,Medium,57958.15,Under Review,False,45,Customer Report
+ALRT00110,CUST00015,ACC010000014,South,ICICI Bank,2024-06-03,Card Cloning,High,184386.25,False Positive,True,38,Customer Report
+ALRT00111,CUST00027,ACC010000026,North,SBI,2024-11-20,Phishing,Critical,160051.13,Under Review,True,37,Rule Engine
+ALRT00112,CUST00043,ACC010000042,Central,SBI,2024-05-09,Multiple Attempts,Medium,40297.1,Blocked,False,13,Customer Report
+ALRT00113,CUST00032,ACC010000031,East,SBI,2023-11-07,Card Cloning,Medium,111587.69,Resolved,False,34,Manual Review
+ALRT00114,CUST00044,ACC010000043,Central,SBI,2023-06-12,Multiple Attempts,Low,161459.7,Escalated,False,15,ML Model
+ALRT00115,CUST00008,ACC010000007,South,SBI,2024-07-29,Card Cloning,Critical,51935.52,Escalated,False,6,Manual Review
+ALRT00116,CUST00010,ACC010000009,West,HDFC Bank,2024-12-07,High Amount,Low,185363.1,False Positive,False,15,Rule Engine
+ALRT00117,CUST00040,ACC010000039,Central,HDFC Bank,2024-09-16,High Amount,Low,101707.49,Under Review,True,27,Manual Review
+ALRT00118,CUST00011,ACC010000010,North,Axis Bank,2023-10-27,Device Mismatch,Critical,146644.1,Resolved,True,47,Manual Review
+ALRT00119,CUST00009,ACC010000008,Central,ICICI Bank,2023-05-06,Card Cloning,Critical,193942.52,Resolved,True,61,Manual Review
+ALRT00120,CUST00019,ACC010000018,West,ICICI Bank,2024-06-01,Multiple Attempts,Low,53570.12,False Positive,False,32,ML Model
+ALRT00121,CUST00049,ACC010000048,Central,Axis Bank,2024-06-26,Velocity Check,Medium,28029.87,False Positive,False,53,Customer Report
+ALRT00122,CUST00034,ACC010000033,South,HDFC Bank,2024-11-29,Phishing,Low,88794.45,Resolved,True,11,Manual Review
+ALRT00123,CUST00021,ACC010000020,Central,HDFC Bank,2024-02-16,Multiple Attempts,Critical,12762.93,Resolved,True,8,Manual Review
+ALRT00124,CUST00027,ACC010000026,North,SBI,2024-02-16,Account Takeover,High,181891.56,Resolved,False,68,ML Model
+ALRT00125,CUST00045,ACC010000044,South,Axis Bank,2024-02-18,Device Mismatch,Medium,177572.16,Blocked,False,45,Customer Report
+ALRT00126,CUST00050,ACC010000049,Central,Kotak Bank,2023-07-22,Account Takeover,Low,7875.55,Escalated,False,17,Manual Review
+ALRT00127,CUST00014,ACC010000013,South,ICICI Bank,2023-04-06,Account Takeover,High,151530.74,Under Review,True,4,Manual Review
+ALRT00128,CUST00016,ACC010000015,West,Axis Bank,2023-11-08,Velocity Check,Low,146531.24,Escalated,False,65,Manual Review
+ALRT00129,CUST00008,ACC010000007,South,SBI,2023-02-18,High Amount,Critical,59943.24,Resolved,False,44,ML Model
+ALRT00130,CUST00048,ACC010000047,South,HDFC Bank,2024-08-18,Card Cloning,High,60190.72,Blocked,True,49,ML Model
+ALRT00131,CUST00007,ACC010000006,South,ICICI Bank,2023-12-02,Card Cloning,High,91134.76,Under Review,False,53,Rule Engine
+ALRT00132,CUST00006,ACC010000005,East,Axis Bank,2023-03-05,Velocity Check,Medium,95512.49,False Positive,True,48,Customer Report
+ALRT00133,CUST00038,ACC010000037,Central,SBI,2024-07-26,Velocity Check,High,117068.6,False Positive,False,63,Customer Report
+ALRT00134,CUST00011,ACC010000010,North,Axis Bank,2023-05-28,Multiple Attempts,Critical,142374.54,Under Review,True,28,Customer Report
+ALRT00135,CUST00031,ACC010000030,North,Kotak Bank,2023-02-03,Multiple Attempts,High,184378.62,Resolved,False,15,Rule Engine
+ALRT00136,CUST00024,ACC010000023,East,SBI,2024-08-08,Account Takeover,Low,104794.11,Resolved,False,40,Manual Review
+ALRT00137,CUST00020,ACC010000019,West,ICICI Bank,2023-10-29,Device Mismatch,Low,158345.14,Under Review,False,7,Manual Review
+ALRT00138,CUST00019,ACC010000018,West,ICICI Bank,2023-08-09,Multiple Attempts,Critical,916.11,Blocked,False,9,Rule Engine
+ALRT00139,CUST00027,ACC010000026,North,SBI,2024-05-07,Account Takeover,Critical,180107.31,False Positive,False,17,ML Model
+ALRT00140,CUST00033,ACC010000032,West,HDFC Bank,2024-10-13,Device Mismatch,Critical,133610.54,Under Review,False,12,Customer Report
+ALRT00141,CUST00025,ACC010000024,Central,SBI,2023-08-27,Velocity Check,High,108428.39,False Positive,False,12,ML Model
+ALRT00142,CUST00046,ACC010000045,South,Kotak Bank,2023-01-26,Account Takeover,Low,128960.88,Resolved,True,70,Rule Engine
+ALRT00143,CUST00037,ACC010000036,East,Kotak Bank,2024-06-18,Card Cloning,Critical,100776.44,Resolved,True,69,ML Model
+ALRT00144,CUST00002,ACC010000001,Central,Axis Bank,2023-10-09,Card Cloning,Medium,166023.26,Blocked,False,11,Manual Review
+ALRT00145,CUST00026,ACC010000025,North,HDFC Bank,2024-08-26,Unusual Location,Critical,172463.88,Resolved,False,56,ML Model
+ALRT00146,CUST00027,ACC010000026,North,SBI,2023-01-25,Phishing,Critical,51806.97,Resolved,True,70,ML Model
+ALRT00147,CUST00019,ACC010000018,West,ICICI Bank,2023-05-28,Multiple Attempts,High,153776.79,Under Review,False,53,ML Model
+ALRT00148,CUST00004,ACC010000003,Central,ICICI Bank,2024-09-21,Phishing,Medium,5920.65,Resolved,False,50,Rule Engine
+ALRT00149,CUST00021,ACC010000020,Central,HDFC Bank,2023-05-26,Velocity Check,High,51957.89,Resolved,True,26,ML Model
+ALRT00150,CUST00049,ACC010000048,Central,Axis Bank,2024-09-03,Card Cloning,Critical,101969.94,Blocked,False,15,Manual Review

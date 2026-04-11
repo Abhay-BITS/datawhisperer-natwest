@@ -1,0 +1,198 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* NatWest Brand Palette */
+  --natwest-purple:       #42145f;
+  --natwest-purple-mid:   #5c1f83;
+  --natwest-purple-light: #7b2fa8;
+  --natwest-red:          #da1710;
+
+  /* Backgrounds — clean white corporate feel */
+  --bg-void:    #ffffff;
+  --bg-base:    #f7f5fb;
+  --bg-surface: #ffffff;
+  --bg-elevated:#f0ecf7;
+  --bg-overlay: #ede8f4;
+
+  /* Borders */
+  --border-subtle:  #ddd5ea;
+  --border-default: #c8bada;
+  --border-strong:  #9d85bb;
+
+  /* Typography */
+  --text-primary:   #1a0a2e;
+  --text-secondary: #3d2060;
+  --text-muted:     #7a6394;
+
+  /* Accent — NatWest purple as primary CTA */
+  --accent:      #42145f;
+  --accent-dim:  rgba(66, 20, 95, 0.10);
+  --accent-glow: rgba(66, 20, 95, 0.22);
+  --accent-dark: #2d0e42;
+
+  /* Semantic colours */
+  --success: #10b981;
+  --warning: #f59e0b;
+  --error:   #da1710;
+  --info:    #3b82f6;
+
+  /* Agent trace colours — kept vivid for contrast on white cards */
+  --agent-semantic:  #7b2fa8;
+  --agent-coder:     #10b981;
+  --agent-critic:    #f59e0b;
+  --agent-narrator:  #da1710;
+
+  --font-display: 'Syne', sans-serif;
+  --font-body:    'IBM Plex Sans', sans-serif;
+  --font-mono:    'IBM Plex Mono', monospace;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  background: var(--bg-base);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  margin: 0;
+  padding: 0;
+}
+
+
+
+.font-display { font-family: var(--font-display); }
+.font-mono { font-family: var(--font-mono); }
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide-in {
+  from { opacity: 0; transform: translateX(-12px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-fade-in { animation: fade-in 0.3s ease forwards; }
+.animate-slide-in { animation: slide-in 0.3s ease forwards; }
+
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 50%;
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+.card-hover:hover {
+  box-shadow: 0 0 0 1px var(--border-strong), 0 0 20px var(--accent-dim);
+  transition: box-shadow 0.2s ease;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: var(--bg-void);
+  border-radius: 9999px;
+  font-weight: 600;
+  font-family: var(--font-body);
+  padding: 0.5rem 1.5rem;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.15s, transform 0.1s;
+}
+
+.btn-primary:hover { opacity: 0.9; }
+.btn-primary:active { transform: scale(0.97); }
+.btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-secondary);
+  border-radius: 9999px;
+  padding: 0.4rem 1rem;
+  border: 1px solid var(--border-default);
+  cursor: pointer;
+  font-family: var(--font-body);
+  transition: background 0.15s, color 0.15s;
+}
+
+.btn-ghost:hover {
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+}
+
+.code-block {
+  background: var(--bg-void);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--agent-coder);
+  overflow-x: auto;
+  white-space: pre;
+}
+
+.gradient-bg {
+  background: linear-gradient(135deg, var(--bg-void) 0%, var(--bg-base) 100%);
+}
+
+/* Responsiveness Utilities */
+@media (max-width: 768px) {
+  .mobile-hide { display: none !important; }
+  .mobile-text-sm { font-size: 0.8125rem !important; }
+  .mobile-p-md { padding: 1rem !important; }
+  .mobile-full-width { width: 100% !important; max-width: 100% !important; }
+  .mobile-branding-text { font-size: 1.5rem !important; }
+  .mobile-grid-1 { grid-template-columns: 1fr !important; }
+  .mobile-modal { 
+    width: 100% !important; 
+    height: 100% !important; 
+    max-height: 100vh !important;
+    border-radius: 0 !important;
+    padding: 1.5rem !important;
+  }
+}
+
+@media (min-width: 769px) {
+  .desktop-hide { display: none !important; }
+  .chat-main-column { display: flex !important; }
+  .chat-right-sidebar { display: flex !important; width: 380px !important; }
+  .thoughts-container { display: flex !important; }
+  .sources-container { display: block !important; }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-default);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--border-strong);
+}

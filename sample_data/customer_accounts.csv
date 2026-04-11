@@ -1,0 +1,51 @@
+customer_id,account_id,customer_name,gender,age,region,city,account_type,bank_name,current_balance,account_open_date,occupation,kyc_status,is_active,credit_score,number_of_products
+CUST00001,ACC010000000,Customer_01,Male,46,East,Kolkata,Savings,ICICI Bank,290229.71,2020-05-25,Salaried,Verified,True,760,3
+CUST00002,ACC010000001,Customer_02,Male,39,Central,Gwalior,Fixed Deposit,Axis Bank,477964.09,2021-02-22,Salaried,Verified,False,740,1
+CUST00003,ACC010000002,Customer_03,Female,51,West,Ahmedabad,Savings,HDFC Bank,807669.82,2018-01-20,Business Owner,Verified,False,800,5
+CUST00004,ACC010000003,Customer_04,Male,62,Central,Jabalpur,Savings,ICICI Bank,363496.51,2018-08-18,Salaried,Pending,True,780,7
+CUST00005,ACC010000004,Customer_05,Male,45,West,Mumbai,Savings,SBI,382831.75,2018-06-04,Retired,Verified,False,760,6
+CUST00006,ACC010000005,Customer_06,Male,32,East,Kolkata,Savings,Axis Bank,903478.07,2023-04-20,Self-Employed,Verified,False,620,4
+CUST00007,ACC010000006,Customer_07,Male,45,South,Hyderabad,Current,ICICI Bank,91689.02,2022-12-14,Business Owner,Verified,False,700,8
+CUST00008,ACC010000007,Customer_08,Male,44,South,Hyderabad,Current,SBI,552651.2,2021-11-16,Freelancer,Pending,True,760,6
+CUST00009,ACC010000008,Customer_09,Female,35,Central,Indore,Fixed Deposit,ICICI Bank,1198153.06,2023-01-26,Student,Verified,True,760,6
+CUST00010,ACC010000009,Customer_10,Male,64,West,Mumbai,Fixed Deposit,HDFC Bank,1195335.26,2018-11-02,Self-Employed,Verified,True,820,7
+CUST00011,ACC010000010,Customer_11,Male,39,North,Chandigarh,Fixed Deposit,Axis Bank,92546.56,2021-01-22,Retired,Verified,True,620,5
+CUST00012,ACC010000011,Customer_12,Male,65,North,Amritsar,Current,HDFC Bank,259719.4,2018-03-15,Self-Employed,Verified,False,820,7
+CUST00013,ACC010000012,Customer_13,Male,63,North,Delhi,Fixed Deposit,Axis Bank,321914.5,2022-09-06,Freelancer,Verified,True,760,5
+CUST00014,ACC010000013,Customer_14,Male,26,South,Chennai,Savings,ICICI Bank,1120244.96,2020-01-27,Retired,Verified,True,780,2
+CUST00015,ACC010000014,Customer_15,Male,60,South,Kochi,Current,ICICI Bank,1057632.69,2021-04-07,Retired,Pending,False,620,8
+CUST00016,ACC010000015,Customer_16,Male,62,West,Mumbai,Fixed Deposit,Axis Bank,1055727.94,2021-02-05,Student,Verified,True,740,1
+CUST00017,ACC010000016,Customer_17,Female,32,Central,Gwalior,Savings,SBI,446584.87,2018-10-31,Self-Employed,Pending,True,720,1
+CUST00018,ACC010000017,Customer_18,Male,56,North,Chandigarh,Fixed Deposit,SBI,193507.46,2020-05-30,Student,Verified,True,760,6
+CUST00019,ACC010000018,Customer_19,Female,37,West,Pune,Salary,ICICI Bank,1001325.22,2018-09-19,Student,Verified,False,760,4
+CUST00020,ACC010000019,Customer_20,Female,32,West,Surat,Fixed Deposit,ICICI Bank,845730.21,2018-03-27,Self-Employed,Verified,True,800,2
+CUST00021,ACC010000020,Customer_21,Male,51,Central,Gwalior,Salary,HDFC Bank,735954.93,2019-09-24,Salaried,Pending,False,800,1
+CUST00022,ACC010000021,Customer_22,Male,46,West,Pune,Fixed Deposit,ICICI Bank,1184743.51,2020-01-17,Salaried,Pending,True,820,1
+CUST00023,ACC010000022,Customer_23,Female,39,Central,Raipur,Fixed Deposit,Axis Bank,786501.7,2023-01-16,Freelancer,Verified,False,700,4
+CUST00024,ACC010000023,Customer_24,Female,62,East,Ranchi,Current,SBI,14348.61,2023-03-26,Student,Verified,False,780,4
+CUST00025,ACC010000024,Customer_25,Female,57,Central,Gwalior,Current,SBI,981439.44,2022-06-19,Business Owner,Pending,False,700,1
+CUST00026,ACC010000025,Customer_26,Male,36,North,Jaipur,Salary,HDFC Bank,362757.61,2022-10-29,Student,Verified,True,720,3
+CUST00027,ACC010000026,Customer_27,Male,65,North,Chandigarh,Current,SBI,797749.51,2018-03-23,Student,Verified,False,760,4
+CUST00028,ACC010000027,Customer_28,Female,42,Central,Gwalior,Savings,SBI,1127021.35,2023-01-15,Student,Verified,False,780,3
+CUST00029,ACC010000028,Customer_29,Male,25,East,Bhubaneswar,Savings,Kotak Bank,165477.88,2020-01-03,Freelancer,Verified,True,620,8
+CUST00030,ACC010000029,Customer_30,Male,36,East,Patna,Salary,Axis Bank,142937.26,2019-03-07,Salaried,Pending,True,760,2
+CUST00031,ACC010000030,Customer_31,Female,24,North,Jaipur,Savings,Kotak Bank,132907.99,2021-10-28,Freelancer,Verified,True,740,4
+CUST00032,ACC010000031,Customer_32,Male,42,East,Patna,Savings,SBI,666102.25,2019-05-27,Freelancer,Pending,False,840,8
+CUST00033,ACC010000032,Customer_33,Female,47,West,Surat,Fixed Deposit,HDFC Bank,330456.11,2021-09-27,Freelancer,Pending,True,840,5
+CUST00034,ACC010000033,Customer_34,Female,39,South,Coimbatore,Current,HDFC Bank,727771.64,2018-07-30,Salaried,Pending,True,760,6
+CUST00035,ACC010000034,Customer_35,Female,26,West,Surat,Savings,SBI,862546.56,2019-12-26,Salaried,Verified,False,680,3
+CUST00036,ACC010000035,Customer_36,Male,35,North,Delhi,Savings,ICICI Bank,248298.79,2022-05-17,Student,Pending,True,780,2
+CUST00037,ACC010000036,Customer_37,Female,58,East,Bhubaneswar,Current,Kotak Bank,762914.36,2021-02-20,Freelancer,Verified,True,680,3
+CUST00038,ACC010000037,Customer_38,Male,42,Central,Indore,Savings,SBI,320460.76,2022-12-16,Business Owner,Verified,True,820,5
+CUST00039,ACC010000038,Customer_39,Female,35,South,Chennai,Savings,HDFC Bank,588795.56,2022-11-27,Salaried,Verified,True,800,2
+CUST00040,ACC010000039,Customer_40,Male,63,Central,Raipur,Current,HDFC Bank,1086877.11,2020-04-12,Self-Employed,Verified,True,620,1
+CUST00041,ACC010000040,Customer_41,Female,53,North,Delhi,Fixed Deposit,Kotak Bank,1016093.94,2021-06-25,Self-Employed,Verified,True,760,5
+CUST00042,ACC010000041,Customer_42,Female,47,East,Ranchi,Savings,Axis Bank,115296.67,2022-03-15,Self-Employed,Verified,True,820,7
+CUST00043,ACC010000042,Customer_43,Male,63,Central,Gwalior,Current,SBI,511173.05,2018-11-13,Retired,Verified,True,820,7
+CUST00044,ACC010000043,Customer_44,Male,51,Central,Indore,Savings,SBI,335632.87,2023-03-11,Student,Verified,True,840,4
+CUST00045,ACC010000044,Customer_45,Male,31,South,Coimbatore,Savings,Axis Bank,9237.1,2023-03-20,Self-Employed,Verified,True,620,2
+CUST00046,ACC010000045,Customer_46,Male,38,South,Bangalore,Fixed Deposit,Kotak Bank,926487.47,2019-04-30,Student,Verified,False,650,4
+CUST00047,ACC010000046,Customer_47,Female,30,East,Kolkata,Salary,Kotak Bank,766350.49,2022-11-06,Self-Employed,Verified,True,840,2
+CUST00048,ACC010000047,Customer_48,Male,37,South,Chennai,Salary,HDFC Bank,318036.54,2018-11-29,Business Owner,Verified,True,760,5
+CUST00049,ACC010000048,Customer_49,Male,57,Central,Bhopal,Current,Axis Bank,890770.94,2022-06-27,Student,Verified,True,680,2
+CUST00050,ACC010000049,Customer_50,Male,56,Central,Indore,Salary,Kotak Bank,664258.1,2022-07-19,Self-Employed,Pending,False,780,1

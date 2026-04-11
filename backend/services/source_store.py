@@ -14,12 +14,21 @@ def list_sources(session_id: str) -> list:
 
 def clone_sources(from_session_id: str, to_session_id: str):
     import uuid
-    from dataclasses import replace
+    from services.db_connector import DBConnector
     sources_to_clone = list_sources(from_session_id)
+    connector = DBConnector()
+    
     for s in sources_to_clone:
-        # Create a fresh copy with a new source_id and the new session_id
-        # We REUSE the engine/conn so we don't reconnect, just reference the same pool
-        new_source = replace(s, source_id=str(uuid.uuid4()), session_id=to_session_id)
+        # Instead of sharing the engine, establish a FRESH connection for the new session
+        # This prevents 'stream not found' errors in Turso and ensures total isolation.
+        new_source = connector.connect(
+            db_type=s.db_type,
+            cfg=s.config,
+            name=s.name,
+            session_id=to_session_id
+        )
+        # Preserve the original source ID's safe name mapping if needed, 
+        # but connector.connect() generates a new source_id which is what we want for isolation.
         _sources[new_source.source_id] = new_source
 
 def remove_source(source_id: str):

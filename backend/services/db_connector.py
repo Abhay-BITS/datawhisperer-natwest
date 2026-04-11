@@ -98,7 +98,7 @@ class DBConnector:
             schema = self._schema_from_df(df, safe_name)
             return DataSource(source_id, name, safe_name, db_type, f"excel://{name}",
                               None, conn, df, schema, True,
-                              datetime.utcnow().isoformat(), 1, session_id)
+                              datetime.utcnow().isoformat(), 1, session_id, cfg)
 
         else:
             conn_str = self._build_conn_str(db_type, cfg)
@@ -111,11 +111,11 @@ class DBConnector:
             elif db_type == DBType.SQLITE and 'turso.io' in cfg.get('host', ''):
                 connect_args["auth_token"] = cfg.get('password') or cfg.get('token')
                 
-            engine = sa.create_engine(conn_str, connect_args=connect_args)
+            engine = sa.create_engine(conn_str, connect_args=connect_args, pool_pre_ping=True)
             schema = self._schema_from_engine(engine, selected_tables)
             return DataSource(source_id, name, safe_name, db_type, masked,
                               engine, None, None, schema, True,
-                              datetime.utcnow().isoformat(), len(schema["tables"]), session_id)
+                              datetime.utcnow().isoformat(), len(schema["tables"]), session_id, cfg)
 
     def _schema_from_df(self, df: pd.DataFrame, table_name: str) -> dict:
         type_map = {"int64": "INTEGER", "float64": "FLOAT", "object": "STRING",

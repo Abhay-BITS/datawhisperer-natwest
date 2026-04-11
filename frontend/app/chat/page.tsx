@@ -967,11 +967,20 @@ function ChartContainer({ result, viz, onCopyStatus }: { result: any; viz: any; 
 }
 
 function ChartRenderer({ result, viz }: { result: any; viz: any }) {
-  const data = result.rows.slice(0, 20).map((row: any[]) => {
+  const data = result.rows.slice(0, 50).map((row: any[]) => {
     const obj: Record<string, any> = {};
     result.columns.forEach((col: string, i: number) => { obj[col] = row[i]; });
     return obj;
   });
+
+  // Case-insensitive column matching logic
+  const findColumn = (key: string) => {
+    if (!key) return key;
+    return result.columns.find((c: string) => c.toLowerCase() === key.toLowerCase()) || key;
+  };
+
+  const xAxis = findColumn(viz.x_axis);
+  const yAxis = findColumn(viz.y_axis);
 
   const tooltipStyle = {
     background: 'var(--bg-overlay)',
@@ -989,10 +998,10 @@ function ChartRenderer({ result, viz }: { result: any; viz: any }) {
     <ResponsiveContainer width="100%" height={220}>
       <BarChart {...commonProps}>
         <CartesianGrid strokeDasharray="3 3" stroke="var(--border-subtle)" />
-        <XAxis dataKey={viz.x_axis} tick={{ fill: 'var(--text-muted)', fontSize: 11 }} />
+        <XAxis dataKey={xAxis} tick={{ fill: 'var(--text-muted)', fontSize: 11 }} />
         <YAxis tick={{ fill: 'var(--text-muted)', fontSize: 11 }} />
         <Tooltip contentStyle={tooltipStyle} />
-        <Bar dataKey={viz.y_axis} fill="#42145f" radius={[4, 4, 0, 0]} />
+        <Bar dataKey={yAxis} fill="#42145f" radius={[4, 4, 0, 0]} />
       </BarChart>
     </ResponsiveContainer>
   );
@@ -1001,11 +1010,11 @@ function ChartRenderer({ result, viz }: { result: any; viz: any }) {
     <ResponsiveContainer width="100%" height={220}>
       <LineChart {...commonProps}>
         <CartesianGrid strokeDasharray="3 3" stroke="var(--border-subtle)" />
-        <XAxis dataKey={viz.x_axis} tick={{ fill: 'var(--text-muted)', fontSize: 11 }} />
+        <XAxis dataKey={xAxis} tick={{ fill: 'var(--text-muted)', fontSize: 11 }} />
         <YAxis tick={{ fill: 'var(--text-muted)', fontSize: 11 }} />
         <Tooltip contentStyle={tooltipStyle} />
         <Line
-          dataKey={viz.y_axis}
+          dataKey={yAxis}
           stroke="#42145f"
           strokeWidth={2}
           dot={{ r: 3, fill: '#42145f' }}
@@ -1019,8 +1028,8 @@ function ChartRenderer({ result, viz }: { result: any; viz: any }) {
       <PieChart>
         <Pie
           data={data}
-          dataKey={viz.y_axis}
-          nameKey={viz.x_axis}
+          dataKey={yAxis}
+          nameKey={xAxis}
           cx="50%"
           cy="50%"
           outerRadius={80}
@@ -1041,8 +1050,8 @@ function ChartRenderer({ result, viz }: { result: any; viz: any }) {
     <ResponsiveContainer width="100%" height={220}>
       <ScatterChart {...commonProps}>
         <CartesianGrid strokeDasharray="3 3" stroke="var(--border-subtle)" />
-        <XAxis dataKey={viz.x_axis} tick={{ fill: 'var(--text-muted)', fontSize: 11 }} />
-        <YAxis dataKey={viz.y_axis} tick={{ fill: 'var(--text-muted)', fontSize: 11 }} />
+        <XAxis dataKey={xAxis} tick={{ fill: 'var(--text-muted)', fontSize: 11 }} />
+        <YAxis dataKey={yAxis} tick={{ fill: 'var(--text-muted)', fontSize: 11 }} />
         <Tooltip contentStyle={tooltipStyle} />
         <Scatter data={data} fill="#42145f" />
       </ScatterChart>

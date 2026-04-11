@@ -38,3 +38,11 @@ app.include_router(export.router)
 @app.get("/health")
 async def health():
     return {"status": "ok", "service": "DataWhisperer API"}
+
+@app.get("/")
+async def root():
+    return {
+        "message": "DataWhisperer API is running!",
+        "documentation": "/docs",
+        "health": "/health"
+    }

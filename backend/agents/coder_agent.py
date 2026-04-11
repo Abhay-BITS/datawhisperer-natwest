@@ -159,8 +159,12 @@ Do NOT use the source name, safe_name, or any other identifier — only the tabl
 - If joining tables, use proper JOIN conditions based on matching column names/types
 {retry_ctx}
 
-Return ONLY valid JSON, no markdown fences:
-{{"code_type": "sql", "code": "SELECT ...", "explanation": "This query..."}}"""
+Return ONLY valid JSON. No preamble. No conversational text.
+{{
+  "code_type": "sql",
+  "code": "SELECT ...",
+  "explanation": "This query..."
+}}"""
 
     result = call_groq(
         system,

@@ -15,6 +15,7 @@ import json
 import time
 import logging
 import threading
+import re
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -85,6 +86,42 @@ class GroqKeyPool:
 _pool = GroqKeyPool()
 
 
+def _extract_json(text: str) -> str:
+    """Extract the first valid-looking JSON object or array from a string."""
+    # Strip common markdown prefix if it covers the whole string
+    text = text.strip()
+    if text.startswith("```"):
+        # Match from ```(json)? to the final ```
+        match = re.search(r"```(?:json)?\s*([\s\S]*?)\s*```", text)
+        if match:
+            text = match.group(1).strip()
+
+    # Find the range between the first { and the last }
+    start = text.find("{")
+    end = text.rfind("}")
+
+    if start == -1 or end == -1:
+        # Check for array if object not found
+        start = text.find("[")
+        end = text.rfind("]")
+
+    if start != -1 and end != -1 and end > start:
+        return text[start : end + 1]
+
+    return text
+
+
+def _clean_json_string(text: str) -> str:
+    """Attempt to fix common JSON formatting errors from LLMs."""
+    # 1. Fix unescaped backslashes that aren't part of a valid escape sequence
+    # This regex looks for a backslash NOT followed by n, r, t, b, f, ", \, or /
+    text = re.sub(r'\\(?![nrtbf"\\/])', r"\\\\", text)
+
+    # 2. Convert common non-standard JSON types (like single quotes)
+    # Be careful not to break valid nested quotes — this is a last resort
+    return text
+
+
 def call_groq(
     system_prompt: str,
     user_prompt: str,
@@ -130,17 +167,19 @@ def call_groq(
             if not expect_json:
                 return text
 
-            # Strip markdown code fences if present
-            if "```" in text:
-                parts = text.split("```")
-                if len(parts) >= 2:
-                    text = parts[1]
-                    if text.startswith("json\n"):
-                        text = text[5:]
-                    elif text.startswith("json"):
-                        text = text[4:]
+            # 1. Extract JSON from potential conversational filler or markdown
+            json_text = _extract_json(text)
 
-            return json.loads(text.strip())
+            try:
+                return json.loads(json_text)
+            except json.JSONDecodeError:
+                # 2. Attempt "aggressive" cleaning (e.g., fixing unescaped backslashes)
+                try:
+                    cleaned_text = _clean_json_string(json_text)
+                    return json.loads(cleaned_text)
+                except json.JSONDecodeError:
+                    # Propagate to the outer retry loop which will do an LLM retry
+                    raise
 
         except RateLimitError as e:
             logger.warning(

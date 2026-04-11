@@ -1,4 +1,4 @@
-const BASE_URL = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000').replace(/\/$/, '');
+const BASE_URL = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000').replace(/\/+$/, '');
 
 function getHeaders(): HeadersInit {
   const token = typeof window !== 'undefined' ? localStorage.getItem('dw_token') : null;

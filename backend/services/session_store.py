@@ -1,7 +1,11 @@
+"""
+Session Store — In-memory User Session Management.
+
+Tracks query history, created timestamps, and session-specific metadata.
+Uses UUID-based tracking to isolate data and state between different users.
+"""
 import uuid
 from datetime import datetime, timedelta
-
-_sessions: dict = {}
 
 def create_session() -> str:
     sid = str(uuid.uuid4())

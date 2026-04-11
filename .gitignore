@@ -54,9 +54,14 @@ temp/
 
 # Dev scratch / debug scripts
 backend/scratch/
+scratch/
 
 # Runtime-generated files
 demo.db
 *.sqlite
 errors.log
 uploads/
+
+# Frontend dev logs
+frontend/dev.log
+dev.log

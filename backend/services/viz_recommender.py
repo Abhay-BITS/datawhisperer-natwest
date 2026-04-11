@@ -1,3 +1,10 @@
+"""
+Visualisation Recommender — Smart Chart Selection.
+
+Analyzes the user question and the query result shape to recommend the 
+best chart type (bar, line, pie, scatter) for rendering in the frontend. 
+Ensures data is presented in the most intuitive visual format.
+"""
 from services.groq_client import call_groq
 
 def recommend_viz(question: str, result: dict) -> dict:

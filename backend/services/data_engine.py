@@ -1,3 +1,10 @@
+"""
+Data Engine — Query Execution & Result Handling.
+
+Central execution hub for running generated code (SQL/DuckDB) against 
+connected data sources. Handles session routing, cross-source joins,
+and result formatting (columns, rows, error handling).
+"""
 from services.source_store import get_source, list_sources
 import duckdb
 import pandas as pd

@@ -1,5 +1,11 @@
+"""
+Database Connector — Cross-Dialect Connection Logic.
+
+Manages connections to multiple database types (PostgreSQL, MySQL, SQLite)
+and handles schema extraction, credential masking, and DuckDB registration
+for file-based sources (CSV/Excel). Uses SQLAlchemy for relational DBs.
+"""
 from dataclasses import dataclass, field
-from enum import Enum
 import sqlalchemy as sa
 from sqlalchemy import inspect as sa_inspect
 import pandas as pd

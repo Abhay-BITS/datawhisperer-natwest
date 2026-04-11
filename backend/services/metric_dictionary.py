@@ -1,3 +1,10 @@
+"""
+Metric Dictionary — Semantic Mapping Layer.
+
+Standardizes business terminology by mapping keywords like 'revenue', 'churn',
+and 'growth' to precise SQL expressions. This ensures consistency across 
+all agents and reduces interpretation errors.
+"""
 METRICS = {
     "revenue": "SUM of columns named: total, amount, revenue, sales, sale_amount, price, value",
     "headcount": "COUNT(*) of rows in employee/person/staff tables",

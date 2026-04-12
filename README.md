@@ -1,27 +1,11 @@
-<!--
-  ╔══════════════════════════════════════════════════════════╗
-  ║          BANNER IMAGE — replace the placeholder below    ║
-  ║  Recommended: 1280×640px dark glassmorphism banner       ║
-  ║  Text on banner: "DataWhisperer · Ask anything.          ║
-  ║   Trust everything." in white on deep-indigo background  ║
-  ╚══════════════════════════════════════════════════════════╝
--->
-
 <div align="center">
-
-<!-- 📸 IMAGE SLOT 1 — HERO BANNER
-     Upload a wide banner image (1280×640px) to docs/images/banner.png
-     It should show the DataWhisperer logo + tagline on a dark glassmorphism background.
-     Replace the placeholder src below with: docs/images/banner.png -->
-
-<img src="docs/images/banner.png" alt="DataWhisperer — Ask anything. Trust everything." width="100%"/>
-
-<br/><br/>
-
+<img src="docs/images/Screenshot%202026-04-12%20at%2013.53.52.png" alt="DataWhisperer - Ask anything. Trust everything." width="100%"/>
+<br/> 
+     
 # DataWhisperer
 ### Ask anything. Trust everything.
 
-**An AI-powered, multi-agent analytics platform that lets business users query any database in plain English — and trust every answer with a full reasoning trail.**
+**An AI-powered, multi-agent analytics platform that lets business users query any database in plain English - and trust every answer with a full reasoning trail.**
 
 <br/>
 
@@ -35,7 +19,7 @@
 
 <br/>
 
-[🌐 Live Demo](https://datawhisperer-natwest.vercel.app) · [📖 Architecture Docs](docs/architecture.md) · [🐛 Report Issue](#) · [🚀 Quick Start](#-quick-start)
+[🌐 Live Demo](https://datawhisperer-natwest.vercel.app) · [📖 Architecture Docs](docs/architecture.md) · [🚀 Quick Start](#-quick-start)
 
 </div>
 
@@ -45,11 +29,11 @@
 
 - [Overview](#-overview)
 - [Live Demo](#-live-demo)
-- [Key Features](#-key-features)
+- [Key Features](#key-features)
 - [Architecture](#-architecture)
-- [Agent Pipeline — Deep Dive](#-agent-pipeline--deep-dive)
+- [Agent Pipeline - Deep Dive](#-agent-pipeline---deep-dive)
 - [Self-Correcting Engine](#-self-correcting-engine)
-- [Analysis Modes](#-analysis-modes)
+- [Analysis Modes](#️-analysis-modes)
 - [Tech Stack](#-tech-stack)
 - [Project Structure](#-project-structure)
 - [Quick Start](#-quick-start)
@@ -58,10 +42,11 @@
 - [API Reference](#-api-reference)
 - [Sample Data](#-sample-data)
 - [Deployment](#-deployment)
-- [What Goes to GitHub](#-what-goes-to-github)
 - [Tests](#-tests)
-- [Limitations & Future Work](#-limitations--future-work)
-- [DCO & License](#-dco--license)
+- [Limitations](#limitations)
+- [Future Improvements](#future-improvements)
+- [License](#license)
+
 
 ---
 
@@ -69,12 +54,12 @@
 
 Many people struggle to get quick, accurate, and trustworthy answers from data. They face too many steps, unclear terminology, and a lack of confidence in the results. **DataWhisperer** removes all of that friction.
 
-Type a question in plain English. Receive a clear, confident business narrative — backed by a complete **Trust Trace** that shows exactly how the AI arrived at its answer, including every SQL query generated, every assumption made, and a 0–100% confidence score.
+Type a question in plain English. Receive a clear, confident business narrative - backed by a complete **Trust Trace** that shows exactly how the AI arrived at its answer, including every SQL query generated, every assumption made, and a 0–100% confidence score.
 
-**Who it is for:** Business analysts, team leads, product managers, and anyone who needs fast, credible insights from databases — without writing SQL.
+**Who it is for:** Business analysts, team leads, product managers, and anyone who needs fast, credible insights from databases - without writing SQL.
 
-> Built for the **NatWest Group — Code for Purpose India Hackathon 2025**
-> Theme: *Talk to Data — Seamless Self-Service Intelligence*
+> Built for the **NatWest Group - Code for Purpose India Hackathon 2026**
+> Theme: *Talk to Data - Seamless Self-Service Intelligence*
 
 ---
 
@@ -82,19 +67,19 @@ Type a question in plain English. Receive a clear, confident business narrative 
 
 **Hosted at:** [https://datawhisperer-natwest.vercel.app](https://datawhisperer-natwest.vercel.app)
 
-<!-- 📸 IMAGE SLOT 2 — DEMO GIF or SCREENSHOT
+<!-- 📸 IMAGE SLOT 2 - DEMO GIF or SCREENSHOT
      Upload an animated GIF or PNG of the main chat interface to: docs/images/demo.gif
      It should show a user typing a question and the Trust Trace expanding.
      Recommended: 900×560px, record with LICEcap or Kap on macOS.
      Replace src below once uploaded. -->
 
 <div align="center">
-<img src="docs/images/demo.gif" alt="DataWhisperer Demo — typing a query and seeing the Trust Trace" width="85%"/>
+<img src="docs/images/Video%20Project%201%20(1).gif" alt="DataWhisperer Demo - typing a query and seeing the Trust Trace" width="85%"/>
 </div>
 
 **Demo credentials (no sign-up needed):**
 - Username: `demo` (any username works)
-- Password: `demo` (any password works — demo auth)
+- Password: `demo` (any password works - demo auth)
 
 **Try these queries on the built-in banking dataset:**
 ```
@@ -107,20 +92,20 @@ Type a question in plain English. Receive a clear, confident business narrative 
 
 ---
 
-## ✨ Key Features
+## Key Features
 
 | # | Feature | Description |
 |---|---|---|
 | 1 | **Natural Language → SQL** | Ask in plain English; get structured data back. Powered by Groq (Llama 3.3 70B). |
-| 2 | **Self-Correcting Queries** | Failed SQL is automatically diagnosed and rewritten — up to 2 retry cycles — without any user intervention. |
-| 3 | **Multi-Agent Trust Trace** | Every answer includes a collapsible timeline showing all 9 agents' decisions — visible in the UI. |
+| 2 | **Self-Correcting Queries** | Failed SQL is automatically diagnosed and rewritten - up to 2 retry cycles - without any user intervention. |
+| 3 | **Multi-Agent Trust Trace** | Every answer includes a collapsible timeline showing all 9 agents' decisions - visible in the UI. |
 | 4 | **Confidence Scoring** | 0–100% trust score with itemised deductions for risky assumptions, retries, and low data coverage. |
 | 5 | **Three Analysis Modes** | Quick (speed), Deep (rigour + charts + follow-ups), Compare (period/group deltas). |
 | 6 | **Semantic Layer** | A built-in metric dictionary ensures "revenue", "sales", "churn" always map to consistent SQL expressions. |
 | 7 | **Multi-Source Analysis** | Connect and query across multiple databases or CSV files in a single conversation. |
 | 8 | **Auto Visualisation** | Smart chart-type selection (bar, line, pie, scatter) based on query shape and result structure. |
 | 9 | **Follow-up Suggestions** | Three contextual next questions generated after every answer to guide exploration. |
-| 10 | **API Key Rotation** | Pool of Groq API keys with automatic failover — keeps the service running when free-tier limits are hit. |
+| 10 | **API Key Rotation** | Pool of Groq API keys with automatic failover - keeps the service running when free-tier limits are hit. |
 | 11 | **Data Masking** | Connection strings are masked before being stored or displayed; no credentials are ever exposed in responses. |
 | 12 | **Export** | Download query results as CSV directly from the chat interface. |
 
@@ -128,80 +113,29 @@ Type a question in plain English. Receive a clear, confident business narrative 
 
 ## 🏗 Architecture
 
-```
-╔══════════════════════════╗           ╔══════════════════════════════════════════════════════════╗
-║                          ║           ║                    FastAPI Backend                       ║
-║   Next.js 14 Frontend    ║  REST/    ║                                                          ║
-║   (Vercel — SSR)         ║◄─────────►║  ┌────────────────────────────────────────────────────┐  ║
-║                          ║  JSON     ║  │             LangGraph Agent Pipeline               │  ║
-║  ┌──────────────────┐    ║           ║  │                                                    │  ║
-║  │  Chat Interface  │    ║           ║  │  ┌──────────┐   ┌─────────┐   ┌──────────────┐    │  ║
-║  │  Trust Trace UI  │    ║           ║  │  │ Semantic │──►│  Audit  │──►│    Coder     │    │  ║
-║  │  Confidence Bar  │    ║           ║  │  │  Agent   │   │ (Deep)  │   │    Agent     │    │  ║
-║  │  Chart Renderer  │    ║           ║  │  └──────────┘   └─────────┘   └──────┬───────┘    │  ║
-║  │  Source Wizard   │    ║           ║  │                                       │            │  ║
-║  └──────────────────┘    ║           ║  │                                  ┌────▼─────┐      │  ║
-╚══════════════════════════╝           ║  │                                  │ Executor │      │  ║
-                                       ║  │                    ┌─────────────┤          │      │  ║
-                                       ║  │                    │  Error?     └────┬─────┘      │  ║
-                                       ║  │                    │                  │            │  ║
-                                       ║  │         ┌──────────▼──────┐      ┌───▼──────┐     │  ║
-                                       ║  │         │  Self-Corrector  │      │  Critic  │     │  ║
-                                       ║  │         │  (up to 2 retry) │      │  Agent   │     │  ║
-                                       ║  │         └──────────┬───────┘      └───┬──────┘     │  ║
-                                       ║  │                    │ rewrite           │            │  ║
-                                       ║  │                    └──────────►──────  │            │  ║
-                                       ║  │                              Verified? │            │  ║
-                                       ║  │                                   ┌────▼──────────┐ │  ║
-                                       ║  │                                   │  Confidence   │ │  ║
-                                       ║  │                                   │   Scorer      │ │  ║
-                                       ║  │                                   └────┬──────────┘ │  ║
-                                       ║  │                                        │            │  ║
-                                       ║  │         ┌──────────┐   ┌──────────┐  ┌▼──────────┐ │  ║
-                                       ║  │         │ Follow-up│◄──│   Viz    │◄─│ Narrator  │ │  ║
-                                       ║  │         │  Agent   │   │Recomm.   │  │  Agent    │ │  ║
-                                       ║  │         └──────────┘   └──────────┘  └───────────┘ │  ║
-                                       ║  └────────────────────────────────────────────────────┘  ║
-                                       ║                                                          ║
-                                       ║  ┌─────────────────┐   ┌──────────────────────────────┐  ║
-                                       ║  │  Groq LLM API   │   │   Data Engine                │  ║
-                                       ║  │  Key Pool +      │   │   SQLAlchemy (PG/MySQL/SQLite)│  ║
-                                       ║  │  Auto-Rotation  │   │   DuckDB (CSV/Excel)         │  ║
-                                       ║  └─────────────────┘   └──────────────────────────────┘  ║
-                                       ╚══════════════════════════════════════════════════════════╝
-```
 
-<!-- 📸 IMAGE SLOT 3 — ARCHITECTURE DIAGRAM IMAGE
-     Upload a visual architecture diagram to: docs/images/architecture.png
-     Can be created in Excalidraw, Miro, or Figma. Should show the same flow as the ASCII above
-     but with color-coded boxes: purple for agents, blue for services, green for frontend.
-     Recommended: 1200×700px -->
+
+
 
 <div align="center">
-<img src="docs/images/architecture.png" alt="DataWhisperer System Architecture" width="90%"/>
-<br/><i>System Architecture — Multi-agent pipeline with self-correction loop</i>
+<img src="docs/images/imag1.png" alt="DataWhisperer System Architecture" width="90%"/>
+<br/><i>System Architecture - Multi-agent pipeline with self-correction loop</i>
 </div>
 
 ---
 
-## 🤖 Agent Pipeline — Deep Dive
+## 🤖 Agent Pipeline - Deep Dive
 
-DataWhisperer uses a **LangGraph directed acyclic graph (DAG)** to orchestrate 9 specialised agents. Each agent is a focused, single-responsibility unit that verifies the previous agent's work — creating a chain of accountability that makes every answer trustworthy.
+DataWhisperer uses a **LangGraph directed acyclic graph (DAG)** to orchestrate 9 specialised agents. Each agent is a focused, single-responsibility unit that verifies the previous agent's work - creating a chain of accountability that makes every answer trustworthy.
 
 The pipeline adapts its depth based on the selected analysis mode:
 
-```
-Quick:   Semantic ──► Coder ──► Executor ──► Critic ──► Narrator ──► END
+<div align="center">
+<img src="docs/images/image2.png" alt="DataWhisperer modes" width="90%"/>
+<br/><i>System Architecture for Each Mode</i>
+</div>
 
-Deep:    Semantic ──► Audit ──► Coder ──► Executor ──► Critic ──► Confidence ──► Narrator ──► Viz ──► Followup ──► END
-                                               ▲                      │
-                                               └──────── Self-Correct ─┘
-                                                       (up to 2 retries)
-
-Compare: Same as Deep, with comparison-specific prompts at each stage
-```
-
-### Agent 1 — Semantic Agent
+### Agent 1 - Semantic Agent
 **File:** `backend/agents/semantic_agent.py`
 
 The **first node in the pipeline**. Before any SQL is written, this agent resolves *what the user actually means*.
@@ -217,7 +151,7 @@ The **first node in the pipeline**. Before any SQL is written, this agent resolv
 
 ---
 
-### Agent 2 — Assumptions Auditor
+### Agent 2 - Assumptions Auditor
 **File:** `backend/agents/assumptions_auditor.py`
 **Active in:** Deep and Compare modes only.
 
@@ -232,7 +166,7 @@ Takes the assumptions surfaced by the Semantic Agent and performs a **deeper ris
 
 ---
 
-### Agent 3 — Coder Agent
+### Agent 3 - Coder Agent
 **File:** `backend/agents/coder_agent.py`
 
 Generates **dialect-aware SQL** for the resolved question.
@@ -245,7 +179,7 @@ Generates **dialect-aware SQL** for the resolved question.
 
 ---
 
-### Agent 4 — Executor *(built into graph.py)*
+### Agent 4 - Executor *(built into graph.py)*
 **File:** `backend/agents/graph.py` → `_execute_node`
 
 Runs the generated SQL against the connected database.
@@ -258,7 +192,7 @@ Runs the generated SQL against the connected database.
 
 ---
 
-### Agent 5 — Self-Corrector *(re-entry into Coder Agent)*
+### Agent 5 - Self-Corrector *(re-entry into Coder Agent)*
 **File:** `backend/agents/coder_agent.py` → `run_correction()`
 **Trigger:** Execution error OR semantic verification failure.
 
@@ -266,32 +200,32 @@ This is the **self-healing core** of DataWhisperer. See [Self-Correcting Engine]
 
 ---
 
-### Agent 6 — Critic Agent
+### Agent 6 - Critic Agent
 **File:** `backend/agents/critic_agent.py`
 
 Performs **two layers of verification** on the execution result:
 
-**Layer 1 — Structural Checks (rule-based, no LLM):**
+**Layer 1 - Structural Checks (rule-based, no LLM):**
 - Did the query execute without error?
 - Are there null values in the result columns?
 - Did the query return any rows at all?
 
-**Layer 2 — Semantic Verification (LLM-powered):**
+**Layer 2 - Semantic Verification (LLM-powered):**
 - Does the result *actually answer* the question asked?
 - Are the returned values in a plausible numerical range?
 - Is the result shape correct (e.g., single value for "highest X", multiple rows for rankings)?
 
-If semantic verification fails in Deep/Compare mode, the pipeline **routes back to the Self-Corrector** with the verification note as additional context — enabling semantic self-correction, not just syntax correction.
+If semantic verification fails in Deep/Compare mode, the pipeline **routes back to the Self-Corrector** with the verification note as additional context - enabling semantic self-correction, not just syntax correction.
 
 > **Why it matters:** A query can execute without error but still return the wrong answer (e.g., returning all-time total instead of last month's total). The Critic catches semantic mistakes, not just syntax errors.
 
 ---
 
-### Agent 7 — Confidence Scorer
+### Agent 7 - Confidence Scorer
 **File:** `backend/agents/confidence_scorer.py`
 **Active in:** Deep and Compare modes only.
 
-Computes a **0–100% confidence score** with a transparent deduction ledger:
+Computes a **0-100% confidence score** with a transparent deduction ledger:
 
 | Deduction Trigger | Points Lost |
 |---|---|
@@ -302,24 +236,24 @@ Computes a **0–100% confidence score** with a transparent deduction ledger:
 
 The score and each deduction are shown in the Trust Trace UI and in the response header. A score below 70% triggers a visual warning.
 
-<!-- 📸 IMAGE SLOT 4 — CONFIDENCE SCORE & TRUST TRACE SCREENSHOT
+<!-- 📸 IMAGE SLOT 4 - CONFIDENCE SCORE & TRUST TRACE SCREENSHOT
      Upload a screenshot of the Trust Trace panel expanded in the UI to: docs/images/trust_trace.png
      Should show the agent timeline on the right, the confidence score badge, and the narrative.
      Recommended: 1100×700px -->
 
 <div align="center">
-<img src="docs/images/trust_trace.png" alt="Trust Trace Panel showing agent reasoning steps and confidence score" width="85%"/>
-<br/><i>Trust Trace — Full agent reasoning timeline + Confidence Score badge</i>
+<img src="docs/images/Screenshot%202026-04-12%20at%2015.14.14.png" alt="Demo of the Trust Score and Visuals" width="85%"/>
+<br/><i>Demo of the Confidence Mode Score and Visuals</i>
 </div>
 
 ---
 
-### Agent 8 — Narrator Agent
+### Agent 8 - Narrator Agent
 **File:** `backend/agents/narrator_agent.py`
 
 Converts raw query results into a **confident, jargon-free business narrative**.
 
-- **Quick mode:** One direct sentence — like a Bloomberg terminal headline.
+- **Quick mode:** One direct sentence - like a Bloomberg terminal headline.
 - **Deep mode:** 3–4 sentences with key figures, trends, and context.
 - **Compare mode:** 2–4 sentences focused on growth rates, deltas, and the primary drivers of change.
 - Gracefully handles failures with an honest error message that tells the user what to try next.
@@ -327,7 +261,7 @@ Converts raw query results into a **confident, jargon-free business narrative**.
 
 ---
 
-### Agent 9 — Viz Recommender *(built into graph.py)*
+### Agent 9 - Viz Recommender *(built into graph.py)*
 **File:** `backend/services/viz_recommender.py`
 **Active in:** Deep and Compare modes only.
 
@@ -341,19 +275,19 @@ Selects the best chart type for the result:
 | Two continuous metrics | Scatter plot |
 | Single value / KPI | Text card |
 
-<!-- 📸 IMAGE SLOT 5 — VISUALISATION SCREENSHOT
+<!-- 📸 IMAGE SLOT 5 - VISUALISATION SCREENSHOT
      Upload a screenshot showing a chart rendered in the chat to: docs/images/chart_demo.png
      Should show a bar or line chart rendered by Recharts below the narrative answer.
      Recommended: 900×500px -->
 
 <div align="center">
-<img src="docs/images/chart_demo.png" alt="Auto-generated bar chart showing top spending categories" width="80%"/>
-<br/><i>Auto Visualisation — chart type selected by the Viz Recommender agent</i>
+<img src="docs/images/Screenshot%202026-04-12%20at%2015.17.35.png" alt="Auto-generated bar showing Average Credit Score by Region" width="80%"/>
+<br/><i>Auto Visualisation - bar showing Average Credit Score by Region using the Viz Recommender agent</i>
 </div>
 
 ---
 
-### Agent 10 — Follow-up Agent
+### Agent 10 - Follow-up Agent
 **File:** `backend/agents/followup_agent.py`
 **Active in:** Deep and Compare modes only.
 
@@ -369,47 +303,29 @@ Generates **three contextual next questions** based on the data just shown. Disp
 
 > **This is the most technically distinctive feature of DataWhisperer.**
 
-Standard NL-to-SQL systems fail silently when the generated SQL returns an error — leaving the user with a cryptic error message. DataWhisperer's **Self-Correcting Engine** automatically diagnoses and fixes failures before the user ever sees them.
+Standard NL-to-SQL systems fail silently when the generated SQL returns an error - leaving the user with a cryptic error message. DataWhisperer's **Self-Correcting Engine** automatically diagnoses and fixes failures before the user ever sees them.
 
 ### How It Works
 
-```
-User asks a question
-       │
-       ▼
-Coder Agent generates SQL  ──────────────────────────────────────┐
-       │                                                          │
-       ▼                                                          │
-Executor runs SQL                                                 │
-       │                                                          │
-  ┌────┴──────────────────┐                                       │
-  │                        │                                      │
-  ▼                        ▼                                      │
-No error              Error detected                              │
-  │                        │                                      │
-  ▼                        └──► retry_count < 2?                  │
-Critic Agent                         │                            │
-  │                              Yes │                            │
-  ▼                                  ▼                            │
-Semantic check ──► FAIL  Self-Corrector runs ────────────────────►┘
-  │                (Deep/Compare)                (new SQL with error
-  │                                               context injected)
-  ▼
-Pass → Confidence → Narrator
-```
+<div align="center">
+<img src="docs/images/image3.png" alt="na" width="80%"/>
+<br/><i>How self correction Agent works</i>
+</div>
+
+
 
 ### What the Self-Corrector Does
 
 When triggered, `coder_agent.run_correction()` receives:
 
-1. **The failed SQL** — exactly what broke
-2. **The error message** — the database's precise complaint (e.g., `column "amount" does not exist`, `syntax error near "PIVOT"`)
-3. **The full schema** — all available tables and columns
-4. **The mode rules** — dialect-specific SQL constraints
+1. **The failed SQL** - exactly what broke
+2. **The error message** - the database's precise complaint (e.g., `column "amount" does not exist`, `syntax error near "PIVOT"`)
+3. **The full schema** - all available tables and columns
+4. **The mode rules** - dialect-specific SQL constraints
 
 It injects all of this into the prompt:
 ```
-PREVIOUS SQL FAILED — fix it:
+PREVIOUS SQL FAILED - fix it:
 Failed SQL: SELECT amount FROM sales GROUP BY month
 Error message: column "amount" does not exist
 Rewrite the SQL to avoid this error.
@@ -426,14 +342,11 @@ The corrected SQL is then re-executed. The retry counter is incremented in `Agen
 
 **Maximum retries:** 2 (configurable in `graph.py` routing conditions). After 2 failures, the Narrator produces an honest failure message explaining what was attempted.
 
-<!-- 📸 IMAGE SLOT 6 — SELF-CORRECTION FLOW GIF or SCREENSHOT
-     Upload a screenshot showing a Trust Trace with a retry visible to: docs/images/self_correction.png
-     Should show the Coder Agent appearing twice in the timeline — once initial, once as "(retry 1)".
-     Recommended: 800×400px -->
+
 
 <div align="center">
-<img src="docs/images/self_correction.png" alt="Trust Trace showing a self-correction retry cycle" width="80%"/>
-<br/><i>Self-Correction in action — Coder Agent rewriting SQL after a failed execution</i>
+<img src="docs/images/Screenshot%202026-04-12%20at%2015.28.29.png" alt="Trust Trace showing a self-correction retry cycle" width="80%"/>
+<br/><i>Self-Correction in action - Coder Agent rewriting SQL after a failed execution</i>
 </div>
 
 ---
@@ -454,8 +367,8 @@ Switch modes using the toggle in the chat input bar. Default is **Deep**.
 
 | Layer | Technology | Role |
 |---|---|---|
-| **LLM** | Groq — Llama 3.3 70B Versatile | SQL generation, narration |
-| **LLM (support agents)** | Groq — Llama 3.1 8B Instant | Confidence scoring, assumptions audit, follow-ups |
+| **LLM** | Groq - Llama 3.3 70B Versatile | SQL generation, narration |
+| **LLM (support agents)** | Groq - Llama 3.1 8B Instant | Confidence scoring, assumptions audit, follow-ups |
 | **Agent Framework** | LangGraph 1.1+ | DAG pipeline orchestration |
 | **Backend API** | FastAPI | REST API, session management |
 | **Query Engine (files)** | DuckDB | In-memory CSV/Excel analytics |
@@ -488,7 +401,7 @@ datawhisperer/
 │   │
 │   ├── routers/                     # FastAPI route handlers
 │   │   ├── auth.py                  # Login / session endpoints
-│   │   ├── chat.py                  # /chat/query — main pipeline trigger
+│   │   ├── chat.py                  # /chat/query - main pipeline trigger
 │   │   ├── sources.py               # Data source connect/disconnect/list
 │   │   └── export.py                # CSV export endpoint
 │   │
@@ -524,7 +437,6 @@ datawhisperer/
 │   │
 │   ├── main.py                      # FastAPI app entry point
 │   ├── run.py                       # Dev runner
-│   ├── requirements.txt             # Python dependencies
 │   ├── Dockerfile                   # Backend container
 │   └── .env.example                 # Environment variable template
 │
@@ -574,6 +486,7 @@ datawhisperer/
 ├── Dockerfile                       # Root Dockerfile (backend)
 ├── .env.example                     # Root environment template
 ├── .gitignore
+│── requirements.txt                 # Python dependencies
 ├── LICENSE                          # Apache 2.0
 └── README.md                        ← you are here
 ```
@@ -586,11 +499,11 @@ datawhisperer/
 
 - **Python 3.11+**
 - **Node.js 20+**
-- **One or more free Groq API keys** — get them at [console.groq.com](https://console.groq.com) (no credit card needed)
+- **One or more free Groq API keys** - get them at [console.groq.com](https://console.groq.com) (no credit card needed)
 
 ---
 
-### Option A — Local Development (Recommended for first run)
+### Option A - Local Development (Recommended for first run)
 
 #### 1. Clone the repository
 
@@ -638,7 +551,7 @@ cd frontend
 # Install dependencies
 npm install
 
-# Configure API URL (optional — defaults to localhost:8000)
+# Configure API URL (optional - defaults to localhost:8000)
 cp .env.example .env.local
 
 # Start dev server
@@ -647,19 +560,11 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000)
 
-<!-- 📸 IMAGE SLOT 7 — DATA SOURCE CONNECTION SCREENSHOT
-     Upload a screenshot of the Add Source wizard to: docs/images/add_source.png
-     Should show the step-by-step wizard for connecting a database or uploading a CSV.
-     Recommended: 800×500px -->
 
-<div align="center">
-<img src="docs/images/add_source.png" alt="Add Data Source wizard — connect PostgreSQL, MySQL, SQLite, or upload CSV" width="75%"/>
-<br/><i>Add Data Source wizard — connect any database or upload CSV/Excel in 3 steps</i>
-</div>
 
 ---
 
-### Option B — Docker (both services in one command)
+### Option B - Docker (both services in one command)
 
 ```bash
 # From project root
@@ -689,28 +594,6 @@ All configuration is via environment variables. **Never commit your `.env` file.
 # The system auto-rotates to the next key when one hits its rate limit.
 GROQ_API_KEYS=gsk_key1_here,gsk_key2_here,gsk_key3_here
 
-# ── Optional: Error Reporting ─────────────────────────────────────────
-# If configured, runtime errors are emailed to this address.
-FEEDBACK_EMAIL=your_email@example.com
-SMTP_HOST=smtp.gmail.com
-SMTP_PORT=587
-SMTP_USER=your_email@gmail.com
-SMTP_PASS=your_app_password
-
-# ── Optional: Cloud Database Demo Mode ────────────────────────────────
-# For the hosted demo, these pre-connect banking datasets at startup.
-SUPABASE_HOST=your-project.supabase.co
-SUPABASE_USER=postgres
-SUPABASE_PASSWORD=your_password
-SUPABASE_DATABASE=postgres
-
-TIDB_HOST=your-cluster.tidbcloud.com
-TIDB_USER=your_user
-TIDB_PASSWORD=your_password
-TIDB_DATABASE=your_database
-
-TURSO_HOST=your-db.turso.io
-TURSO_AUTH_TOKEN=your_token
 ```
 
 ### Frontend (`frontend/.env.local`)
@@ -720,7 +603,7 @@ TURSO_AUTH_TOKEN=your_token
 NEXT_PUBLIC_API_URL=http://localhost:8000
 ```
 
-### API Key Rotation — How It Works
+### API Key Rotation - How It Works
 
 The `GroqKeyPool` class in `backend/services/groq_client.py` manages a thread-safe pool of keys:
 
@@ -745,14 +628,14 @@ Add multiple keys to `GROQ_API_KEYS` to extend the free-tier capacity. Each key 
 
 ## 💬 Usage Examples
 
-### Example 1 — Aggregation Query (Deep Mode)
+### Example 1 - Aggregation Query (Deep Mode)
 
 **User asks:** `"What are the top 5 spending categories by total transaction amount?"`
 
 **What DataWhisperer does:**
 1. Semantic Agent maps "spending categories" to the `category` column and "total amount" to `SUM(amount)`.
 2. Coder Agent generates: `SELECT category, SUM(amount) AS total_spend FROM bank_transactions GROUP BY category ORDER BY total_spend DESC LIMIT 5`
-3. Executor runs it — succeeds.
+3. Executor runs it - succeeds.
 4. Critic verifies: 5 rows returned, values are plausible, shape matches a ranking query.
 5. Confidence Scorer: 95/100 (no assumptions, no retries).
 6. Narrator: *"Food & Groceries leads all spending at £42,150, followed by Transport (£31,200) and Utilities (£28,900). The top 5 categories account for 78% of total transaction volume."*
@@ -760,7 +643,7 @@ Add multiple keys to `GROQ_API_KEYS` to extend the free-tier capacity. Each key 
 
 ---
 
-### Example 2 — Self-Correction in Action
+### Example 2 - Self-Correction in Action
 
 **User asks:** `"Show month-over-month revenue growth"`
 
@@ -787,7 +670,7 @@ Add multiple keys to `GROQ_API_KEYS` to extend the free-tier capacity. Each key 
 
 ---
 
-### Example 3 — Compare Mode
+### Example 3 - Compare Mode
 
 **User asks:** `"Compare Q1 vs Q2 fraud alerts"`
 
@@ -866,7 +749,7 @@ The `sample_data/` directory contains five synthetic banking datasets designed f
 | `loan_portfolio.csv` | 400 | Loan portfolio records | `loan_id`, `amount`, `loan_type`, `status`, `issue_date`, `region` |
 | `monthly_revenue.csv` | 36 | 3-year monthly revenue series | `month`, `revenue`, `channel`, `region` |
 
-All data is **synthetically generated** — no real customer data. Safe for demo and public repositories.
+All data is **synthetically generated** - no real customer data. Safe for demo and public repositories.
 
 ---
 
@@ -884,24 +767,9 @@ The Next.js frontend deploys to Vercel in one click:
 
 The live demo runs at: [https://datawhisperer-natwest.vercel.app](https://datawhisperer-natwest.vercel.app)
 
-### Backend (Render)
 
-1. Create a new **Web Service** on [render.com](https://render.com).
-2. Connect the GitHub repo.
-3. Set **Root Directory** to `backend`.
-4. Set **Start Command** to: `uvicorn main:app --host 0.0.0.0 --port 8000`
-5. Add all environment variables from `backend/.env.example`.
 
-### Backend (Railway)
-
-```bash
-railway init
-railway add
-railway up
-railway variables set GROQ_API_KEYS=gsk_your_key_1,gsk_your_key_2
-```
-
-### Backend (Docker)
+### Backend (Hugging Face)
 
 ```bash
 # From backend/
@@ -913,61 +781,7 @@ docker run -p 8000:8000 \
 
 ---
 
-## 📦 What Goes to GitHub
 
-### ✅ Committed to the repository
-
-```
-backend/agents/          All agent source files
-backend/routers/         API route handlers
-backend/services/        Core service layer
-backend/models/          Pydantic schemas
-backend/middleware/       Auth middleware
-backend/utils/           Logger, masker
-backend/tests/           Test suite
-backend/scripts/         Database init scripts
-backend/main.py          App entry point
-backend/requirements.txt Python dependencies
-backend/.env.example     Environment template (no real keys)
-backend/Dockerfile       Container definition
-
-frontend/app/            Next.js pages
-frontend/components/     React components
-frontend/hooks/          Custom hooks
-frontend/lib/            API client, types
-frontend/public/sample/  Sample CSV files
-frontend/package.json    Node dependencies
-frontend/.env.example    Frontend env template
-
-sample_data/             Synthetic banking CSVs
-docs/                    Architecture docs + images
-
-docker-compose.yml
-.env.example             Root env template
-.gitignore
-LICENSE
-README.md
-```
-
-### ❌ NOT committed (gitignored)
-
-```
-backend/.env             ← Real API keys — NEVER commit
-backend/demo.db          ← Runtime SQLite database
-backend/errors.log       ← Runtime error log
-backend/__pycache__/     ← Python bytecode
-backend/scratch/         ← Debug scripts
-backend/.venv/           ← Virtual environment
-
-frontend/.env.local      ← Local env overrides
-frontend/node_modules/   ← Node packages
-frontend/.next/          ← Build output
-frontend/dev.log         ← Dev server log
-
-scratch/                 ← Root-level debug scripts
-uploads/                 ← Uploaded files at runtime
-*.sqlite                 ← Any SQLite files
-```
 
 > **Security note:** The project uses environment variables exclusively for all credentials. No API keys, passwords, or tokens appear anywhere in the committed code. The `GroqKeyPool`, `DBConnector`, and all service classes read exclusively from `os.getenv()`.
 
@@ -996,34 +810,38 @@ pytest tests/ --cov=. --cov-report=term-missing
 
 ---
 
-## ⚠️ Limitations & Future Work
 
-### Current Limitations
-
-- **Demo authentication only:** The login system accepts any username/password. A real deployment would need proper auth (JWT, OAuth).
-- **Session state is in-memory:** Restarting the backend clears all sessions and connected sources.
-- **No persistent conversation history:** History lives in the browser session only.
-- **Cross-database joins are limited** to sources registered in the same DuckDB in-memory context. True cross-RDBMS joins are not supported.
-- **No schema change detection:** If a connected database's schema changes, the source must be re-connected.
-- **Free-tier rate limits:** The system depends on Groq's free tier. Under heavy load, even with key rotation, responses may slow down.
-
-### Future Improvements
-
-- Persistent user accounts and conversation history (PostgreSQL + Redis).
-- WebSocket streaming for real-time Trust Trace updates as each agent completes.
-- Scheduled queries and email/Slack delivery of results.
-- Fine-tuned SQL generation model on internal schema patterns.
-- RBAC — restrict certain tables or columns per user role.
-- Pluggable LLM backends (OpenAI, Anthropic, local Ollama).
-- Voice input via Web Speech API.
-
+## Limitations
+ 
+- **Demo-only authentication.** Any username/password is accepted - no real user management, hashing, or role-based access.
+- **In-memory session state.** Sessions, sources, and chat history are lost on backend restart.
+- **No cross-database joins.** Multiple sources can be queried in one conversation, but tables from different databases cannot be joined in a single query.
+- **Limited SQL dialects.** Only PostgreSQL, MySQL, SQLite, and DuckDB are supported - no SQL Server, Oracle, or Snowflake.
+- **No streaming responses.** The full agent pipeline must finish before the user sees output; Deep mode queries can take 8–15 seconds.
+- **Results capped at 500 rows.** Large result sets are silently truncated with no pagination.
+- **Basic visualisations.** Limited to bar, line, pie, and scatter charts - no heatmaps, stacked charts, or user customisation.
+- **Free-tier LLM dependency.** Relies on Groq's free tier; heavy usage can exhaust all pooled keys simultaneously.
+ 
 ---
+ 
+## Future Improvements
+ 
+- **Real auth and multi-tenancy** - OAuth 2.0 / SSO with role-based access for team collaboration.
+- **Persistent storage** - back sessions and chat history with a database so nothing is lost on restart.
+- **Streaming pipeline** - stream each agent's output to the UI in real time as it completes.
+- **Broader database support** - add SQL Server, Oracle, Snowflake, and BigQuery connectors.
+- **Cross-source joins** - use DuckDB as a federation layer to join tables across different databases.
+- **Richer visualisations** - histograms, heatmaps, grouped charts, and user-customisable styling.
+- **Conversation memory** - persist history so follow-up questions work across sessions.
+- **Caching and monitoring** - cache frequent queries and track confidence scores, retry rates, and errors in production.
+ 
 
-## 📄 DCO & License
+
+
 
 ### License
 
-This project is licensed under the **Apache License 2.0** — see [LICENSE](LICENSE) for the full text.
+This project is licensed under the **Apache License 2.0** - see [LICENSE](LICENSE) for the full text.
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-purple.svg)](LICENSE)
 
@@ -1031,17 +849,8 @@ This project is licensed under the **Apache License 2.0** — see [LICENSE](LICE
 
 All commits in this repository are signed off in compliance with the **Developer Certificate of Origin** as required by the NatWest Code for Purpose Hackathon rules.
 
-Commits use the `-s` flag:
-```bash
-git commit -s -m "feat: add confidence scoring agent"
-```
 
-Which appends:
-```
-Signed-off-by: Your Name <your@email.com>
-```
 
-All contributions are made in a **personal capacity**, not as official company work.
 
 ### Third-Party Licenses
 
@@ -1060,9 +869,9 @@ All contributions are made in a **personal capacity**, not as official company w
 
 <div align="center">
 
-**Built for NatWest Group — Code for Purpose India Hackathon 2025**
+**Built for NatWest Group - Code for Purpose India Hackathon 2026**
 
-*Talk to Data — Seamless Self-Service Intelligence*
+*Talk to Data - Seamless Self-Service Intelligence*
 
 <br/>
 

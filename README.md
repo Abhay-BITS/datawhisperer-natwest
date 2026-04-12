@@ -1,4 +1,4 @@
-<img width="1440" height="900" alt="image" src="https://github.com/user-attachments/assets/401b36ee-3e99-49fa-8ff2-8c683573c30e" /><!--
+
   ╔══════════════════════════════════════════════════════════╗
   ║          BANNER IMAGE — replace the placeholder below    ║
   ║  Recommended: 1280×640px dark glassmorphism banner       ║

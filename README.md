@@ -31,9 +31,9 @@
 - [Live Demo](#-live-demo)
 - [Key Features](#key-features)
 - [Architecture](#-architecture)
-- [Agent Pipeline - Deep Dive](#agent-pipeline--deep-dive)
+- [Agent Pipeline - Deep Dive](#-agent-pipeline---deep-dive)
 - [Self-Correcting Engine](#-self-correcting-engine)
-- [Analysis Modes](#analysis-modes)
+- [Analysis Modes](#️-analysis-modes)
 - [Tech Stack](#-tech-stack)
 - [Project Structure](#-project-structure)
 - [Quick Start](#-quick-start)
@@ -47,7 +47,7 @@
 
 ---
 
-## Overview
+## 🔍 Overview
 
 Many people struggle to get quick, accurate, and trustworthy answers from data. They face too many steps, unclear terminology, and a lack of confidence in the results. **DataWhisperer** removes all of that friction.
 
@@ -60,7 +60,7 @@ Type a question in plain English. Receive a clear, confident business narrative 
 
 ---
 
-## Live Demo
+## 🌐 Live Demo
 
 **Hosted at:** [https://datawhisperer-natwest.vercel.app](https://datawhisperer-natwest.vercel.app)
 
@@ -108,7 +108,7 @@ Type a question in plain English. Receive a clear, confident business narrative 
 
 ---
 
-## Architecture
+## 🏗 Architecture
 
 
 
@@ -121,7 +121,7 @@ Type a question in plain English. Receive a clear, confident business narrative 
 
 ---
 
-## Agent Pipeline - Deep Dive
+## 🤖 Agent Pipeline - Deep Dive
 
 DataWhisperer uses a **LangGraph directed acyclic graph (DAG)** to orchestrate 9 specialised agents. Each agent is a focused, single-responsibility unit that verifies the previous agent's work - creating a chain of accountability that makes every answer trustworthy.
 
@@ -233,6 +233,10 @@ Computes a **0-100% confidence score** with a transparent deduction ledger:
 
 The score and each deduction are shown in the Trust Trace UI and in the response header. A score below 70% triggers a visual warning.
 
+<!-- 📸 IMAGE SLOT 4 - CONFIDENCE SCORE & TRUST TRACE SCREENSHOT
+     Upload a screenshot of the Trust Trace panel expanded in the UI to: docs/images/trust_trace.png
+     Should show the agent timeline on the right, the confidence score badge, and the narrative.
+     Recommended: 1100×700px -->
 
 <div align="center">
 <img src="docs/images/Screenshot%202026-04-12%20at%2015.14.14.png" alt="Demo of the Trust Score and Visuals" width="85%"/>
@@ -268,7 +272,10 @@ Selects the best chart type for the result:
 | Two continuous metrics | Scatter plot |
 | Single value / KPI | Text card |
 
-
+<!-- 📸 IMAGE SLOT 5 - VISUALISATION SCREENSHOT
+     Upload a screenshot showing a chart rendered in the chat to: docs/images/chart_demo.png
+     Should show a bar or line chart rendered by Recharts below the narrative answer.
+     Recommended: 900×500px -->
 
 <div align="center">
 <img src="docs/images/Screenshot%202026-04-12%20at%2015.17.35.png" alt="Auto-generated bar showing Average Credit Score by Region" width="80%"/>
@@ -341,7 +348,7 @@ The corrected SQL is then re-executed. The retry counter is incremented in `Agen
 
 ---
 
-## Analysis Modes
+## ⚙️ Analysis Modes
 
 | Mode | Pipeline Depth | LLM Calls | Use Case |
 |---|---|---|---|
@@ -353,7 +360,7 @@ Switch modes using the toggle in the chat input bar. Default is **Deep**.
 
 ---
 
-## Tech Stack
+## 🛠 Tech Stack
 
 | Layer | Technology | Role |
 |---|---|---|
@@ -483,7 +490,7 @@ datawhisperer/
 
 ---
 
-## Quick Start
+## 🚀 Quick Start
 
 ### Prerequisites
 
@@ -709,7 +716,7 @@ curl -X POST http://localhost:8000/chat/query \
 
 ---
 
-## API Reference
+## 📡 API Reference
 
 | Method | Endpoint | Description |
 |---|---|---|
@@ -777,7 +784,7 @@ docker run -p 8000:8000 \
 
 ---
 
-## Tests
+## 🧪 Tests
 
 Tests are in `backend/tests/` and use **pytest**.
 

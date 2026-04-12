@@ -4,9 +4,6 @@
 
 <div align="center">
 <img src="docs/images/Screenshot%202026-04-12%20at%2013.53.52.png" alt="DataWhisperer — Ask anything. Trust everything." width="100%"/>
-
-<br/><br/>
-
 # DataWhisperer
 ### Ask anything. Trust everything.
 

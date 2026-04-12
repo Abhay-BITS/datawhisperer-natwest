@@ -437,7 +437,6 @@ datawhisperer/
 │   │
 │   ├── main.py                      # FastAPI app entry point
 │   ├── run.py                       # Dev runner
-│   ├── requirements.txt             # Python dependencies
 │   ├── Dockerfile                   # Backend container
 │   └── .env.example                 # Environment variable template
 │
@@ -487,6 +486,7 @@ datawhisperer/
 ├── Dockerfile                       # Root Dockerfile (backend)
 ├── .env.example                     # Root environment template
 ├── .gitignore
+│── requirements.txt                 # Python dependencies
 ├── LICENSE                          # Apache 2.0
 └── README.md                        ← you are here
 ```

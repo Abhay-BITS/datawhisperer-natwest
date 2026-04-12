@@ -43,6 +43,9 @@
 - [Sample Data](#-sample-data)
 - [Deployment](#-deployment)
 - [Tests](#-tests)
+- [Limitations](#limitations)
+- [Future Improvements](#future-improvements)
+- [License](#license)
 
 
 ---
@@ -807,6 +810,31 @@ pytest tests/ --cov=. --cov-report=term-missing
 
 ---
 
+
+## Limitations
+ 
+- **Demo-only authentication.** Any username/password is accepted - no real user management, hashing, or role-based access.
+- **In-memory session state.** Sessions, sources, and chat history are lost on backend restart.
+- **No cross-database joins.** Multiple sources can be queried in one conversation, but tables from different databases cannot be joined in a single query.
+- **Limited SQL dialects.** Only PostgreSQL, MySQL, SQLite, and DuckDB are supported - no SQL Server, Oracle, or Snowflake.
+- **No streaming responses.** The full agent pipeline must finish before the user sees output; Deep mode queries can take 8–15 seconds.
+- **Results capped at 500 rows.** Large result sets are silently truncated with no pagination.
+- **Basic visualisations.** Limited to bar, line, pie, and scatter charts - no heatmaps, stacked charts, or user customisation.
+- **Free-tier LLM dependency.** Relies on Groq's free tier; heavy usage can exhaust all pooled keys simultaneously.
+ 
+---
+ 
+## Future Improvements
+ 
+- **Real auth and multi-tenancy** - OAuth 2.0 / SSO with role-based access for team collaboration.
+- **Persistent storage** - back sessions and chat history with a database so nothing is lost on restart.
+- **Streaming pipeline** - stream each agent's output to the UI in real time as it completes.
+- **Broader database support** - add SQL Server, Oracle, Snowflake, and BigQuery connectors.
+- **Cross-source joins** - use DuckDB as a federation layer to join tables across different databases.
+- **Richer visualisations** - histograms, heatmaps, grouped charts, and user-customisable styling.
+- **Conversation memory** - persist history so follow-up questions work across sessions.
+- **Caching and monitoring** - cache frequent queries and track confidence scores, retry rates, and errors in production.
+ 
 
 
 

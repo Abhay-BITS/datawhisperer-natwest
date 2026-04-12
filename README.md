@@ -9,10 +9,6 @@
 
 <div align="center">
 
-<!-- 📸 IMAGE SLOT 1 — HERO BANNER
-     Upload a wide banner image (1280×640px) to docs/images/banner.png
-     It should show the DataWhisperer logo + tagline on a dark glassmorphism background.
-     Replace the placeholder src below with: docs/images/banner.png -->
 
 <img src="docs/images/Screenshot%202026-04-12%20at%2013.53.52.png" alt="DataWhisperer — Ask anything. Trust everything." width="100%"/>
 

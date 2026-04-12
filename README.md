@@ -1,4 +1,4 @@
-<!--
+<img width="1440" height="900" alt="image" src="https://github.com/user-attachments/assets/401b36ee-3e99-49fa-8ff2-8c683573c30e" /><!--
   ╔══════════════════════════════════════════════════════════╗
   ║          BANNER IMAGE — replace the placeholder below    ║
   ║  Recommended: 1280×640px dark glassmorphism banner       ║
@@ -14,7 +14,7 @@
      It should show the DataWhisperer logo + tagline on a dark glassmorphism background.
      Replace the placeholder src below with: docs/images/banner.png -->
 
-<img src="docs/images/banner.png" alt="DataWhisperer — Ask anything. Trust everything." width="100%"/>
+<img src="docs/images/Screenshot%202026-04-12%20at%2013.53.52.png" alt="DataWhisperer — Ask anything. Trust everything." width="100%"/>
 
 <br/><br/>
 

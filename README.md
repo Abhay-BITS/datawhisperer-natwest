@@ -15,7 +15,7 @@
 [![LangGraph](https://img.shields.io/badge/LangGraph-1.1%2B-orange.svg)](https://langchain-ai.github.io/langgraph/)
 [![Groq](https://img.shields.io/badge/LLM-Groq%20%7C%20Llama%203.3%2070B-yellow.svg)](https://console.groq.com)
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-datawhisperer--natwest.vercel.app-brightgreen.svg)](https://datawhisperer-natwest.vercel.app)
-[![NatWest Hackathon](https://img.shields.io/badge/NatWest-Code%20for%20Purpose%202025-purple.svg)](https://natwestgroup.com)
+[![NatWest Hackathon](https://img.shields.io/badge/NatWest-Code%20for%20Purpose%202026-purple.svg)](https://natwestgroup.com)
 
 <br/>
 

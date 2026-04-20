@@ -4,12 +4,14 @@ load_dotenv()
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
-from routers import auth, sources, chat, export
-import os
+from routers import auth, sources, chat, export, voice
+import os, logging
+
+logger = logging.getLogger(__name__)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # startup
+    logger.info("DataWhisperer API started")
     yield
     # shutdown: cleanup sessions
     from services.session_store import cleanup_expired
@@ -34,6 +36,7 @@ app.include_router(auth.router)
 app.include_router(sources.router)
 app.include_router(chat.router)
 app.include_router(export.router)
+app.include_router(voice.router)
 
 @app.get("/health")
 async def health():

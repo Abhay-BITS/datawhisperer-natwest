@@ -1,11 +1,15 @@
 'use client';
-import { useState, useEffect, useRef, Suspense } from 'react';
+import { useState, useEffect, useRef, Suspense, useCallback } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
 import { useChat } from '@/hooks/useChat';
+import { useVoice } from '@/hooks/useVoice';
 import { getSources, suggestQuestions } from '@/lib/api';
 import type { DataSource, Message } from '@/lib/types';
 import { AddSourceWizard } from '@/components/AddSourceWizard';
+import TalkButton from '@/components/TalkButton';
+import ConfirmationGate from '@/components/ConfirmationGate';
+import VoiceStatusBar from '@/components/VoiceStatusBar';
 import {
   BarChart, Bar, LineChart, Line, PieChart, Pie, Cell,
   ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip,
@@ -51,6 +55,7 @@ function ChatPageInner() {
     mode,
     setMode,
     sendMessage,
+    injectMessages,
   } = useChat(sessionId || '');
 
 
@@ -66,10 +71,42 @@ function ChatPageInner() {
   const [showWizard, setShowWizard] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
+  // Voice handler — called when voice pipeline returns a response
+  // We already have the transcript as a user message in the pipeline;
+  // here we just inject the assistant reply into the local chat state.
+  const handleVoiceResponse = useCallback((response: any, transcript?: string) => {
+    const now = new Date().toISOString();
+    const newMsgs: Message[] = [];
+    if (transcript) {
+      newMsgs.push({
+        id: crypto.randomUUID(),
+        type: 'user',
+        content: transcript,
+        timestamp: now,
+      });
+    }
+    newMsgs.push({
+      id: crypto.randomUUID(),
+      type: response.error ? 'error' : 'assistant',
+      content: response.insight_narrative || response.insight || response.error || 'Analysis complete.',
+      timestamp: now,
+      response,
+      mode,
+    });
+    injectMessages(newMsgs);
+  }, [mode, injectMessages]);
+
   const searchParams = useSearchParams();
   const scopedSourceId = searchParams.get('source_id');
   const activeSources = scopedSourceId ? sources.filter(s => s.source_id === scopedSourceId) : sources;
   const scopedSource = sources.find(s => s.source_id === scopedSourceId);
+
+  const voice = useVoice({
+    sessionId: sessionId || '',
+    sourceIds: activeSources.map(s => s.source_id),
+    analysisMode: mode,
+    onChatResponse: handleVoiceResponse,
+  });
 
   useEffect(() => {
     if (!isLoading && !isAuthenticated) router.push('/auth');
@@ -92,11 +129,14 @@ function ChatPageInner() {
       setIsSuggestionsLoading(true);
       suggestQuestions(sessionId, scopedSourceId || undefined)
         .then(data => {
+          // Only replace defaults when the backend returns schema-grounded questions
           if (data.questions && data.questions.length > 0) {
-            setSuggestedQuestions(data.questions);
+            setSuggestedQuestions(data.questions.slice(0, 3));
+          } else {
+            setSuggestedQuestions([]); // no fallback generics — show nothing
           }
         })
-        .catch(() => { })
+        .catch(() => setSuggestedQuestions([]))
         .finally(() => setIsSuggestionsLoading(false));
     }
   }, [sessionId, sources.length, scopedSourceId]);
@@ -240,12 +280,11 @@ function ChatPageInner() {
                     {activeSources.length === 0 && <span style={{ color: 'var(--text-muted)', fontSize: '0.75rem' }}>No sources selected</span>}
                   </div>
                 </div>
-                <p style={{ color: 'var(--text-secondary)', marginBottom: '1rem', fontSize: '0.875rem', display: 'flex', alignItems: 'center', gap: 8 }}>
-                  Suggested questions:
-                  {isSuggestionsLoading && (
-                    <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Generating new ideas...</span>
-                  )}
-                </p>
+                {(isSuggestionsLoading || suggestedQuestions.length > 0) && (
+                  <p style={{ color: 'var(--text-secondary)', marginBottom: '1rem', fontSize: '0.875rem', display: 'flex', alignItems: 'center', gap: 8 }}>
+                    {isSuggestionsLoading ? 'Generating questions from your data…' : 'Try asking:'}
+                  </p>
+                )}
                 {!isSuggestionsLoading && suggestedQuestions.map(q => (
                   <button
                     key={q}
@@ -323,10 +362,34 @@ function ChatPageInner() {
             <div ref={messagesEndRef} />
           </div>
 
+          {/* Voice UI — above the input bar, same max-width as pill */}
+          {(voice.state !== 'idle' || voice.error) && (
+            <div style={{ padding: '0 1.5rem' }}>
+              <div style={{ maxWidth: 850, margin: '0 auto', width: '100%' }}>
+                <VoiceStatusBar state={voice.state} language={voice.languageCode} />
+                {voice.state === 'confirming' && (
+                  <ConfirmationGate
+                    transcript={voice.transcript}
+                    languageCode={voice.languageCode}
+                    confidence={voice.confidence}
+                    retryCount={voice.retryCount}
+                    onConfirm={voice.confirmTranscript}
+                    onRetry={voice.retryRecording}
+                  />
+                )}
+                {voice.error && (
+                  <div style={{ padding: '6px 12px', background: 'rgba(245,158,11,0.08)', border: '1px solid rgba(245,158,11,0.25)', borderRadius: 8, fontSize: '12px', color: '#f59e0b', fontFamily: 'monospace', marginBottom: 6 }}>
+                    {voice.error}
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
           {/* Input & Modes (Gemini Style Pill) */}
-          <div style={{ padding: '1rem 1.5rem', borderTop: '1px solid var(--border-subtle)' }}>
+          <div className="chat-input-wrap" style={{ padding: '0.75rem 1.5rem 1rem', borderTop: '1px solid var(--border-subtle)' }}>
             <div style={{ maxWidth: 850, margin: '0 auto', width: '100%' }}>
-              <div style={{
+              <div className="chat-input-pill" style={{
                 background: 'var(--bg-elevated)',
                 borderRadius: 24,
                 border: '1px solid var(--border-default)',
@@ -359,7 +422,7 @@ function ChatPageInner() {
                   rows={1}
                 />
 
-                <div style={{
+                <div className="chat-input-toolbar" style={{
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',
@@ -367,11 +430,12 @@ function ChatPageInner() {
                   paddingTop: '0.5rem',
                   borderTop: '1px solid var(--border-subtle)'
                 }}>
-                  <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+                  <div className="chat-input-left" style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
                     {/* Database Select */}
-                    <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
+                    <div className="chat-data-select-wrap" style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
                       <span style={{ fontSize: '0.65rem', fontWeight: 700, color: 'var(--text-muted)', letterSpacing: '0.05em' }}>DATA:</span>
                       <select
+                        className="chat-data-select"
                         value={scopedSourceId || 'all'}
                         onChange={e => {
                           const val = e.target.value;
@@ -396,6 +460,7 @@ function ChatPageInner() {
 
                     {/* Connect Button */}
                     <button
+                      className="chat-connect-btn"
                       data-tour="chat-connect"
                       onClick={() => setShowWizard(true)}
                       style={{
@@ -418,9 +483,10 @@ function ChatPageInner() {
                     <div style={{ width: 1, height: 16, background: 'var(--border-default)' }} />
 
                     {/* Mode Select */}
-                    <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
+                    <div className="chat-mode-wrap" style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
                       <span style={{ fontSize: '0.65rem', fontWeight: 700, color: 'var(--text-muted)', letterSpacing: '0.05em' }}>MODE:</span>
                       <select
+                        className="chat-mode-select"
                         data-tour="chat-mode"
                         value={mode}
                         onChange={e => setMode(e.target.value as any)}
@@ -436,27 +502,34 @@ function ChatPageInner() {
                     </div>
                   </div>
 
-                  {/* Send Button */}
-                  <button
-                    onClick={handleSend}
-                    disabled={!input.trim() || chatLoading}
-                    style={{
-                      background: 'var(--accent)',
-                      color: 'white',
-                      border: 'none',
-                      borderRadius: '50%',
-                      width: 32,
-                      height: 32,
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      cursor: 'pointer',
-                      opacity: (!input.trim() || chatLoading) ? 0.5 : 1,
-                      transition: 'all 0.2s'
-                    }}
-                  >
-                    <img src="https://cdn.jsdelivr.net/npm/@tabler/icons/icons/arrow-up.svg" alt="send" style={{ width: 18, height: 18, filter: 'brightness(0) invert(1)' }} />
-                  </button>
+                  {/* Send + Talk Buttons */}
+                  <div className="chat-input-right" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <TalkButton
+                      state={voice.state}
+                      countdown={voice.countdown}
+                      onClick={voice.toggleRecording}
+                    />
+                    <button
+                      onClick={handleSend}
+                      disabled={!input.trim() || chatLoading}
+                      style={{
+                        background: 'var(--accent)',
+                        color: 'white',
+                        border: 'none',
+                        borderRadius: '50%',
+                        width: 32,
+                        height: 32,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        cursor: 'pointer',
+                        opacity: (!input.trim() || chatLoading) ? 0.5 : 1,
+                        transition: 'all 0.2s'
+                      }}
+                    >
+                      <img src="https://cdn.jsdelivr.net/npm/@tabler/icons/icons/arrow-up.svg" alt="send" style={{ width: 18, height: 18, filter: 'brightness(0) invert(1)' }} />
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -504,7 +577,7 @@ function ChatPageInner() {
         {/* Right side layout (Reasoning + Sources) */}
         {(messages.length > 0 || activeTab !== 'chat') && (
           <div
-            className="chat-right-sidebar"
+            className={`chat-right-sidebar ${activeTab !== 'chat' ? 'mobile-open' : ''}`}
             style={{
               width: 380, flexShrink: 0,
               background: 'var(--bg-surface)',
@@ -572,7 +645,7 @@ function ChatPageInner() {
                     return (
                       <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                         {activeMsg.response.trust_trace.map((entry, i) => (
-                          <ThoughtCard key={i} entry={entry} index={i} />
+                          <ThoughtCard key={i} entry={entry} />
                         ))}
                       </div>
                     );
@@ -646,6 +719,7 @@ function MessageBubble({ msg, expandedTrace, setExpandedTrace, onFollowup, isAct
   showReasoningHint?: boolean;
   onCopyStatus: (s: string | null) => void;
 }) {
+  void setExpandedTrace; // passed for future expand-by-id; not yet wired inside bubble
   const isUser = msg.type === 'user';
   const r = msg.response;
 
@@ -692,7 +766,7 @@ function MessageBubble({ msg, expandedTrace, setExpandedTrace, onFollowup, isAct
   }
 
   const traceId = msg.id;
-  const isTraceExpanded = expandedTrace === traceId;
+  void expandedTrace; // retained in props for future expand-by-id logic
 
   return (
     <div
@@ -1158,7 +1232,7 @@ const RISK_COLOR: Record<string, string> = {
   UNKNOWN: 'var(--warning)',
 };
 
-function ThoughtCard({ entry, index }: { entry: any; index: number }) {
+function ThoughtCard({ entry }: { entry: any }) {
   const accent = AGENT_ACCENT[entry.agent] || 'var(--text-muted)';
   const icon = AGENT_ICON[entry.agent] || '•';
   const d = entry.details || {};

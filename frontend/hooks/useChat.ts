@@ -78,5 +78,10 @@ export function useChat(sessionId: string) {
     }
   }, [sessionId, mode, messages]);
 
-  return { messages, isLoading, mode, setMode, sendMessage };
+  // Inject pre-built messages (used by voice pipeline to avoid double API call)
+  const injectMessages = useCallback((newMsgs: Message[]) => {
+    setMessages(prev => [...prev, ...newMsgs]);
+  }, []);
+
+  return { messages, isLoading, mode, setMode, sendMessage, injectMessages };
 }

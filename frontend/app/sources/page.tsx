@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { getSources, deleteSource } from '@/lib/api';
+import { getSources, deleteSource, cloneSources } from '@/lib/api';
 import type { DataSource } from '@/lib/types';
 import { useAuth } from '@/hooks/useAuth';
 import { useOnboarding } from '@/hooks/useOnboarding';
@@ -16,28 +16,28 @@ const DB_ICONS: Record<string, string> = {
 };
 
 export default function SourcesPage() {
-  const { isAuthenticated, username, isLoading, signOut, switchSession } = useAuth();
+  const { isAuthenticated, username, userId, isLoading, signOut, createNewChat, switchSession } = useAuth();
   const { nextStep } = useOnboarding();
   const router = useRouter();
   const [sources, setSources] = useState<DataSource[]>([]);
   const [showWizard, setShowWizard] = useState(false);
   const [loadingSources, setLoadingSources] = useState(true);
 
-  // Dedicated stable session ID for the drafting area
-  const DRAFT_SESSION_ID = `drafts_${username || 'anon'}`;
+  // Stable per-user draft session — keyed by UUID (not username) so two users
+  // on the same device never share sources.
+  const DRAFT_SESSION_ID = userId ? `drafts_${userId}` : '';
 
   useEffect(() => {
     if (!isLoading && !isAuthenticated) router.push('/auth');
   }, [isAuthenticated, isLoading, router]);
 
   useEffect(() => {
-    if (username) {
-      getSources(DRAFT_SESSION_ID)
-        .then(data => setSources(Array.isArray(data) ? data : data.sources || []))
-        .catch(() => { })
-        .finally(() => setLoadingSources(false));
-    }
-  }, [username, DRAFT_SESSION_ID]);
+    if (!DRAFT_SESSION_ID) return;
+    getSources(DRAFT_SESSION_ID)
+      .then(data => setSources(Array.isArray(data) ? data : data.sources || []))
+      .catch(() => { })
+      .finally(() => setLoadingSources(false));
+  }, [DRAFT_SESSION_ID]);
 
   const handleDelete = async (sourceId: string) => {
     await deleteSource(sourceId);
@@ -49,10 +49,26 @@ export default function SourcesPage() {
     setShowWizard(false);
   };
 
-  const handleStartChat = (targetSourceId?: string) => {
-    // Switch the active session to the draft session — sources are already there.
-    // No network clone needed; navigation is instant.
-    switchSession(DRAFT_SESSION_ID);
+  const handleStartChat = async (targetSourceId?: string) => {
+    console.log('[DataWhisperer] Starting chat flow...', { targetSourceId, draftId: DRAFT_SESSION_ID, sourceCount: sources.length });
+    
+    // Always create a FRESH chat session so old messages never bleed in.
+    const newId = createNewChat();
+    console.log('[DataWhisperer] Created fresh session:', newId);
+
+    if (DRAFT_SESSION_ID && sources.length > 0) {
+      try { 
+        console.log('[DataWhisperer] Cloning sources from draft to new session...');
+        await cloneSources(DRAFT_SESSION_ID, newId); 
+        console.log('[DataWhisperer] Cloning successful');
+      } catch (err) { 
+        console.error('[DataWhisperer] Cloning failed:', err); 
+      }
+    } else {
+      console.warn('[DataWhisperer] Skipping clone: missing draft ID or sources');
+    }
+
+    switchSession(newId);
     if (targetSourceId) {
       router.push(`/chat?source_id=${targetSourceId}`);
     } else {

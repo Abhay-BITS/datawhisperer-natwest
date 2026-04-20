@@ -7,6 +7,7 @@ export function useAuth() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [username, setUsername] = useState('');
   const [sessionId, setSessionId] = useState('');
+  const [userId, setUserId] = useState('');   // stable UUID per user, never changes
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
 
@@ -14,6 +15,11 @@ export function useAuth() {
     const token = localStorage.getItem('dw_token');
     const storedSession = localStorage.getItem('dw_session');
     const storedUser = localStorage.getItem('dw_username');
+    
+    // Proactively ensure we have a stable user ID on mount
+    const uid = _ensureUserId();
+    setUserId(uid);
+
     if (token && storedSession) {
       setIsAuthenticated(true);
       setSessionId(storedSession);
@@ -22,12 +28,20 @@ export function useAuth() {
     setIsLoading(false);
   }, []);
 
+  function _ensureUserId(): string {
+    let uid = localStorage.getItem('dw_user_id');
+    if (!uid) {
+      uid = crypto.randomUUID();
+      localStorage.setItem('dw_user_id', uid);
+    }
+    return uid;
+  }
+
   function createNewChat() {
     const newId = crypto.randomUUID();
     setSessionId(newId);
     localStorage.setItem('dw_session', newId);
-    
-    // Track sessions list
+
     const stored = localStorage.getItem('dw_sessions');
     const sessions = stored ? JSON.parse(stored) : [];
     if (!sessions.includes(newId)) {
@@ -48,10 +62,14 @@ export function useAuth() {
       if (data.token) {
         localStorage.setItem('dw_token', data.token);
         localStorage.setItem('dw_username', data.username);
+
+        // Assign a stable UUID to this user on first login — never changes
+        const uid = _ensureUserId();
+        setUserId(uid);
+
         setIsAuthenticated(true);
         setUsername(data.username);
-        
-        // Use existing session if any, otherwise create one
+
         const lastSession = localStorage.getItem('dw_session');
         if (lastSession) {
           setSessionId(lastSession);
@@ -68,11 +86,11 @@ export function useAuth() {
 
   function signOut() {
     localStorage.removeItem('dw_token');
-    // We keep dw_session and dw_username so history remains visible in the browser context
+    // Keep dw_session, dw_username, dw_user_id so history stays visible
     setIsAuthenticated(false);
     setIsLoading(false);
     router.push('/auth');
   }
 
-  return { isAuthenticated, username, sessionId, isLoading, signIn, signOut, createNewChat, switchSession };
+  return { isAuthenticated, username, userId, sessionId, isLoading, signIn, signOut, createNewChat, switchSession };
 }

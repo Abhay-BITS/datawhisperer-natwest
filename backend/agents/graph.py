@@ -39,6 +39,9 @@ def _viz_node(state: dict) -> dict:
     return state
 
 def _route_after_semantic(state):
+    # Off-topic questions already have insight_narrative set — skip to END
+    if state.get("intent_type") == "offtopic":
+        return END
     return "audit" if state["mode"] in ["deep", "compare"] else "coder"
 
 def _route_after_executor(state):
@@ -77,7 +80,8 @@ def build_graph() -> StateGraph:
 
     graph.add_conditional_edges("semantic", _route_after_semantic, {
         "audit": "audit",
-        "coder": "coder"
+        "coder": "coder",
+        END: END,
     })
     graph.add_edge("audit", "coder")
     graph.add_edge("coder", "executor")

@@ -207,45 +207,119 @@ async def connect_demo(body: dict):
 
 @router.post("/api/sources/suggest-questions")
 async def suggest_questions(body: dict):
+    import logging, re
+    log = logging.getLogger(__name__)
     try:
         session_id = body.get("session_id")
-        source_id = body.get("source_id") # Optional: if provided, focus only on this source
-        
+        source_id = body.get("source_id")
+
         sources = list_sources(session_id)
         if source_id:
             sources = [s for s in sources if s.source_id == source_id]
-            
+
         if not sources:
-            return {"questions": ["What can I ask about my data?", "How do I get started?", "What tables are available?"]}
+            return {"questions": []}
 
-        # Build schema context for LLM
-        schema_ctx = []
+        # Build schema context + collect every real column name (and human-readable alias)
+        schema_lines = []
+        # col_vocab: all words that are valid to reference (raw names + space-separated forms)
+        col_vocab: set[str] = set()
+        dimension_cols: list[str] = []   # categorical / string columns good for GROUP BY
+        metric_cols: list[str] = []      # numeric columns good for aggregation
+        date_cols: list[str] = []        # temporal columns good for trends
+
         for s in sources:
-            source_info = f"Source: {s.name} ({s.db_type.value})\n"
             for tname, tinfo in s.schema.get("tables", {}).items():
-                cols = [c["name"] for c in tinfo.get("columns", [])]
-                source_info += f"  Table: {tname} | Columns: {', '.join(cols)}\n"
-            schema_ctx.append(source_info)
-        
-        ctx_str = "\n".join(schema_ctx)
-        
-        system = """You are a Data Analyst. Based on the provided database schema, suggest 3-5 high-value business analytical questions.
-Each question should be concise and directly queryable using the columns provided.
-Target a mix of ranking, trend analysis, and descriptive statistics.
-Return ONLY a JSON array of strings."""
+                cols = tinfo.get("columns", [])
+                col_desc = ", ".join(f"{c['name']} ({c.get('type','?')})" for c in cols)
+                row_count = tinfo.get("row_count", "?")
+                schema_lines.append(f'Table "{tname}" ({row_count} rows): {col_desc}')
 
-        user_input = f"Schema Context:\n{ctx_str}"
-        
-        questions = call_groq(system, user_input, temperature=0.7, max_tokens=300)
-        if not isinstance(questions, list):
-            # Fallback if LLM didn't return a list
-            questions = ["What are the top trends in this data?", "Summarize the key metrics", "Which categories have the most impact?"]
-            
-        return {"questions": questions}
+                for c in cols:
+                    raw = c["name"].lower()
+                    col_vocab.add(raw)
+                    # also add space-separated form so "net_profit" → "net profit" is valid
+                    col_vocab.add(raw.replace("_", " "))
+                    # also add individual tokens
+                    col_vocab.update(raw.replace("_", " ").split())
+
+                    ctype = str(c.get("type", "")).lower()
+                    if any(t in ctype for t in ("int", "float", "double", "decimal", "numeric", "real", "money", "number")):
+                        metric_cols.append(raw.replace("_", " "))
+                    elif any(t in ctype for t in ("date", "time", "timestamp", "year", "month")):
+                        date_cols.append(raw.replace("_", " "))
+                    else:
+                        dimension_cols.append(raw.replace("_", " "))
+
+        if not schema_lines:
+            return {"questions": []}
+
+        schema_str = "\n".join(schema_lines)
+
+        # Give the LLM only the real column vocabulary so it cannot invent columns
+        dim_hint  = ", ".join(dimension_cols[:12]) or "none"
+        metric_hint = ", ".join(metric_cols[:12]) or "none"
+        date_hint = ", ".join(date_cols[:8]) or "none"
+
+        system = f"""You are a senior data analyst. Suggest exactly 3 business questions a user can ask about the data below.
+
+RULES — read every rule carefully:
+1. ONLY use concepts from these column lists. Do NOT invent or assume any other column exists:
+   - Dimension columns (for grouping/breakdown): {dim_hint}
+   - Metric columns (for aggregation):           {metric_hint}
+   - Date/time columns (for trends):             {date_hint}
+2. Every question MUST return multiple rows so it can be plotted as a chart.
+   Required pattern: one metric grouped by one dimension (e.g. "revenue by region").
+   FORBIDDEN: single-value questions ("total X", "average X", "what is X").
+3. Write natural English — no underscores, no technical column names.
+   Convert column names: "total_revenue" → "revenue", "net_profit" → "net profit".
+4. One question must be a ranking: "Which [dimension] has the highest [metric]?"
+5. One question must be a breakdown/trend: "[metric] by [dimension or date]"
+6. One question must compare groups: "How does [metric] compare across [dimension]?"
+7. Maximum 12 words per question.
+
+SCHEMA (for reference):
+{schema_str}
+
+Return ONLY valid JSON: {{"questions": ["q1", "q2", "q3"]}}"""
+
+        result = call_groq(system, "Generate 3 chart-ready questions.", temperature=0.35, max_tokens=250)
+
+        if isinstance(result, dict):
+            raw_questions = result.get("questions", [])
+        elif isinstance(result, list):
+            raw_questions = result
+        else:
+            raw_questions = []
+
+        # Post-generation validation: reject questions that contain words not in col_vocab
+        # (catch hallucinated dimensions like "city", "country", "product" when they don't exist)
+        def _question_is_valid(q: str) -> bool:
+            words = re.sub(r"[^a-z0-9 ]", "", q.lower()).split()
+            # Stop words that are always fine
+            stopwords = {
+                "which", "what", "how", "does", "the", "a", "an", "by", "of", "in",
+                "is", "are", "was", "for", "to", "do", "top", "each", "across",
+                "between", "and", "or", "vs", "per", "over", "from", "compare",
+                "show", "give", "me", "us", "with", "has", "have", "highest",
+                "lowest", "most", "least", "best", "worst", "total", "average",
+                "trend", "breakdown", "distribution", "number", "count",
+            }
+            # Any word not in stopwords must appear in col_vocab
+            suspicious = [w for w in words if w not in stopwords and len(w) > 3 and w not in col_vocab]
+            # Allow up to 1 word not in vocab (model rephrasing is fine)
+            return len(suspicious) <= 1
+
+        validated = [
+            str(q).strip() for q in raw_questions
+            if q and str(q).strip() and _question_is_valid(str(q))
+        ][:3]
+
+        return {"questions": validated}
+
     except Exception as e:
-        import logging
-        logging.getLogger(__name__).warning("Error generating suggestions: %s", e)
-        return {"questions": ["What is the overall trend?", "List the top items by value", "Compare performance over time"]}
+        log.warning("Error generating suggestions: %s", e)
+        return {"questions": []}
 
 @router.post("/api/sources/clone")
 async def clone_session_sources(body: dict):

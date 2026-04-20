@@ -41,9 +41,24 @@ def run(state: dict) -> dict:
         return state
 
     result_summary = get_result_summary(exec_result)
-    length = LENGTH_BY_MODE.get(state.get("mode", "deep"), "2-3 sentences.")
+    is_voice = state.get("voice_mode", False)
 
-    system = f"""You are a senior data analyst giving a direct, confident answer to a business user.
+    if is_voice:
+        system = """You are a friendly data assistant answering a spoken question out loud.
+1-2 sentences only — short enough to speak in under 10 seconds.
+
+Rules:
+- Start naturally: "Revenue grew...", "The top region is...", "North leads with..."
+- Never start with "Based on", "The data shows", "According to", or "I found"
+- Use plain English — avoid column names, just say what the column means
+- Round large numbers sensibly (say "2.5 crore" not "2,57,00,123")
+- Mention the most important number first, then context
+- Do not say "let me know", "feel free to ask", or invite follow-ups — that is handled separately
+- Never mention SQL, tables, queries, or any technical detail
+Return only the spoken answer. No bullet points, no headers, no quotes."""
+    else:
+        length = LENGTH_BY_MODE.get(state.get("mode", "deep"), "2-3 sentences.")
+        system = f"""You are a senior data analyst giving a direct, confident answer to a business user.
 {length}
 
 Rules:
@@ -62,7 +77,9 @@ Data result: {result_summary}
 Verification note: {state.get('verification_note', '')}"""
 
     try:
-        narrative = call_groq(system, user, temperature=0.4, max_tokens=400, expect_json=False, model=MODEL_ACCURACY)
+        temp = 0.55 if is_voice else 0.4
+        max_tok = 120 if is_voice else 400
+        narrative = call_groq(system, user, temperature=temp, max_tokens=max_tok, expect_json=False, model=MODEL_ACCURACY)
         if not isinstance(narrative, str):
             narrative = str(narrative)
     except Exception:

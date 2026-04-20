@@ -36,12 +36,14 @@ class GroqKeyPool:
     """
 
     def __init__(self):
+        self._keys = []
         keys_csv = os.getenv("GROQ_API_KEYS", "")
         if keys_csv:
             self._keys = [k.strip() for k in keys_csv.split(",") if k.strip()]
-        else:
-            single = os.getenv("GROQ_API_KEY", "")
-            self._keys = [single] if single else []
+            
+        single = os.getenv("GROQ_API_KEY", "")
+        if single and single.strip() and single.strip() not in self._keys:
+            self._keys.append(single.strip())
 
         if not self._keys:
             raise RuntimeError(

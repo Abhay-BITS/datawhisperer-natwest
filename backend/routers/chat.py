@@ -78,6 +78,8 @@ async def chat(body: dict):
             "visualization": {},
             "suggested_followups": [],
             "trust_trace": [],
+            "voice_mode": body.get("voice_mode", False),
+            "response_language": body.get("response_language", "en"),
             "final_error": None,
         }
 

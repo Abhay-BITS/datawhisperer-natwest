@@ -45,6 +45,9 @@ class AgentState(TypedDict):
     confidence_score: Optional[int]     # Precise only
     confidence_reasoning: Optional[str] # Precise only
 
+    voice_mode: Optional[bool]        # True when called from Talk button
+    response_language: Optional[str]  # "en", "hi", "hi-en", etc.
+
     insight_narrative: str
     visualization: dict
     suggested_followups: list[str]

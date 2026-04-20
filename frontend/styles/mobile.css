@@ -1,0 +1,155 @@
+/* Mobile layout — phone only. Desktop untouched. */
+@media (max-width: 768px) {
+
+  html, body { height: 100%; overflow: hidden; }
+
+  /* Full height chat */
+  .chat-page {
+    display: flex !important;
+    flex-direction: column !important;
+    height: 100dvh !important;
+    overflow: hidden !important;
+  }
+
+  /* Top nav compact */
+  nav { padding: 0 12px !important; height: 44px !important; flex-shrink: 0; }
+  nav .nav-label { display: none !important; }
+
+  /* Schema panel: slide-in drawer from right */
+  .schema-panel {
+    position: fixed !important;
+    right: -100% !important;
+    top: 44px !important;
+    width: 82% !important;
+    max-width: 300px !important;
+    height: calc(100dvh - 44px) !important;
+    z-index: 100 !important;
+    transition: right 0.25s ease !important;
+    box-shadow: -4px 0 24px #00000090 !important;
+    overflow-y: auto !important;
+  }
+  .schema-panel.open { right: 0 !important; }
+
+  /* Schema overlay */
+  .schema-overlay { display: none; position: fixed; inset: 0; background: #00000060; z-index: 99; }
+  .schema-overlay.visible { display: block; }
+
+  /* Input area on mobile */
+  .chat-input-area {
+    padding: 0.75rem 0.75rem !important;
+  }
+
+  .chat-input-wrap {
+    padding: 0.5rem 0.6rem 0.7rem !important;
+  }
+  .chat-input-pill {
+    border-radius: 18px !important;
+    padding: 0.65rem 0.75rem !important;
+  }
+  .chat-input-toolbar {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 10px !important;
+  }
+  .chat-input-left {
+    width: 100% !important;
+    min-width: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    overflow-x: auto !important;
+    padding-bottom: 2px !important;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+  }
+  .chat-input-left::-webkit-scrollbar { display: none !important; }
+  .chat-input-right {
+    width: 100% !important;
+    justify-content: flex-end !important;
+  }
+  .chat-data-select-wrap,
+  .chat-mode-wrap {
+    flex-shrink: 0 !important;
+  }
+  .chat-data-select {
+    max-width: 44vw !important;
+  }
+  .chat-mode-select {
+    max-width: 26vw !important;
+  }
+  .chat-connect-btn {
+    flex-shrink: 0 !important;
+    padding: 3px 8px !important;
+    font-size: 0.68rem !important;
+  }
+
+  /* Talk button label hidden on very small screens */
+  .talk-label {
+    display: none !important;
+  }
+
+  /* Suggestion chips scrollable, no visible scrollbar */
+  .suggestion-chips {
+    overflow-x: auto !important;
+    flex-wrap: nowrap !important;
+    padding-bottom: 4px !important;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+  }
+  .suggestion-chips::-webkit-scrollbar { display: none !important; }
+
+  /* Charts: 190px height on mobile */
+  .recharts-responsive-container {
+    height: 190px !important;
+  }
+
+  /* Message bubbles full width */
+  .message-bubble {
+    max-width: 100% !important;
+  }
+
+  /* Confirmation gate full width */
+  .confirmation-gate {
+    margin: 4px 0 !important;
+  }
+
+  /* Voice status bar compact */
+  .voice-status-bar {
+    font-size: 10px !important;
+    padding: 4px 10px !important;
+  }
+
+  /* Hide desktop-only elements */
+  .mobile-hide { display: none !important; }
+  .desktop-hide { display: flex !important; }
+
+  /* Mobile right panel should be a full-screen tab view, not a desktop-width sidebar */
+  .chat-right-sidebar {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    border-left: none !important;
+    z-index: 30 !important;
+    display: none !important;
+  }
+  .chat-right-sidebar.mobile-open {
+    display: flex !important;
+  }
+  .chat-main-column {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+  .reasoning-scroller {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Source grid 1 column */
+  .mobile-grid-1 { grid-template-columns: 1fr !important; }
+  .mobile-full-width { width: 100% !important; }
+  .mobile-branding-text { font-size: 1.35rem !important; }
+}
+
+@media (min-width: 769px) {
+  .desktop-hide { display: none !important; }
+}

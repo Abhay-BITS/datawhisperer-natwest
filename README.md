@@ -131,7 +131,7 @@ DataWhisperer uses a **LangGraph directed acyclic graph (DAG)** to orchestrate 9
 The pipeline adapts its depth based on the selected analysis mode:
 
 <div align="center">
-<img src="docs/images/image2.png" alt="DataWhisperer modes" width="90%"/>
+<img src="docs/images/Modes.png" alt="DataWhisperer modes" width="90%"/>
 <br/><i>System Architecture for Each Mode</i>
 </div>
 
@@ -275,10 +275,7 @@ Selects the best chart type for the result:
 | Two continuous metrics | Scatter plot |
 | Single value / KPI | Text card |
 
-<!-- 📸 IMAGE SLOT 5 - VISUALISATION SCREENSHOT
-     Upload a screenshot showing a chart rendered in the chat to: docs/images/chart_demo.png
-     Should show a bar or line chart rendered by Recharts below the narrative answer.
-     Recommended: 900×500px -->
+
 
 <div align="center">
 <img src="docs/images/Screenshot%202026-04-12%20at%2015.17.35.png" alt="Auto-generated bar showing Average Credit Score by Region" width="80%"/>
@@ -377,7 +374,7 @@ Switch modes using the toggle in the chat input bar. Default is **Deep**.
 | **Styling** | Vanilla CSS | Glassmorphism dark theme |
 | **Charts** | Recharts | Data visualisation |
 | **Deployment (frontend)** | Vercel | Edge CDN, CI/CD |
-| **Deployment (backend)** | Render / Railway | Python server |
+| **Deployment (backend)** | Hugginge Face | Python server |
 | **License** | Apache 2.0 | Open source |
 
 ---

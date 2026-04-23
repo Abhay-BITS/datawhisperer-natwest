@@ -33,6 +33,7 @@
 - [Architecture](#-architecture)
 - [Agent Pipeline - Deep Dive](#-agent-pipeline---deep-dive)
 - [Self-Correcting Engine](#-self-correcting-engine)
+- [Voice Mode (Browser-Native)](#-voice-mode-browser-native)
 - [Analysis Modes](#️-analysis-modes)
 - [Tech Stack](#-tech-stack)
 - [Project Structure](#-project-structure)
@@ -54,7 +55,7 @@
 
 Many people struggle to get quick, accurate, and trustworthy answers from data. They face too many steps, unclear terminology, and a lack of confidence in the results. **DataWhisperer** removes all of that friction.
 
-Type a question in plain English. Receive a clear, confident business narrative - backed by a complete **Trust Trace** that shows exactly how the AI arrived at its answer, including every SQL query generated, every assumption made, and a 0–100% confidence score.
+Type a question in plain English - or **speak it aloud** - and receive a clear, confident business narrative, backed by a complete **Trust Trace** that shows exactly how the AI arrived at its answer, including every SQL query generated, every assumption made, and a 0–100% confidence score.
 
 **Who it is for:** Business analysts, team leads, product managers, and anyone who needs fast, credible insights from databases - without writing SQL.
 
@@ -90,6 +91,8 @@ Type a question in plain English. Receive a clear, confident business narrative 
 "Which customer accounts have the highest balance?"
 ```
 
+> 💡 **Tip:** Tap the mic button in the chat bar and speak your question. DataWhisperer will transcribe it in real time and read the answer back aloud - all without any external voice service.
+
 ---
 
 ## Key Features
@@ -98,7 +101,7 @@ Type a question in plain English. Receive a clear, confident business narrative 
 |---|---|---|
 | 1 | **Natural Language → SQL** | Ask in plain English; get structured data back. Powered by Groq (Llama 3.3 70B). |
 | 2 | **Self-Correcting Queries** | Failed SQL is automatically diagnosed and rewritten - up to 2 retry cycles - without any user intervention. |
-| 3 | **Multi-Agent Trust Trace** | Every answer includes a collapsible timeline showing all 9 agents' decisions - visible in the UI. |
+| 3 | **Multi-Agent Trust Trace** | Every answer includes a collapsible timeline showing all 10 agents' decisions - visible in the UI. |
 | 4 | **Confidence Scoring** | 0–100% trust score with itemised deductions for risky assumptions, retries, and low data coverage. |
 | 5 | **Three Analysis Modes** | Quick (speed), Deep (rigour + charts + follow-ups), Compare (period/group deltas). |
 | 6 | **Semantic Layer** | A built-in metric dictionary ensures "revenue", "sales", "churn" always map to consistent SQL expressions. |
@@ -108,14 +111,12 @@ Type a question in plain English. Receive a clear, confident business narrative 
 | 10 | **API Key Rotation** | Pool of Groq API keys with automatic failover - keeps the service running when free-tier limits are hit. |
 | 11 | **Data Masking** | Connection strings are masked before being stored or displayed; no credentials are ever exposed in responses. |
 | 12 | **Export** | Download query results as CSV directly from the chat interface. |
+| 13 | **Browser-Native Voice** | Ask questions by voice and hear answers read back - powered by the Web Speech API (STT) and `speechSynthesis` (TTS). No external services, no API keys, no audio ever leaves the browser. |
+| 14 | **Mobile-First Responsive UI** | Fully optimised chat, source management, and trust-trace views for phones and tablets, with a dedicated mobile layout and bottom navigation. |
 
 ---
 
 ## 🏗 Architecture
-
-
-
-
 
 <div align="center">
 <img src="docs/images/imag1.png" alt="DataWhisperer System Architecture" width="90%"/>
@@ -126,7 +127,7 @@ Type a question in plain English. Receive a clear, confident business narrative 
 
 ## 🤖 Agent Pipeline - Deep Dive
 
-DataWhisperer uses a **LangGraph directed acyclic graph (DAG)** to orchestrate 9 specialised agents. Each agent is a focused, single-responsibility unit that verifies the previous agent's work - creating a chain of accountability that makes every answer trustworthy.
+DataWhisperer uses a **LangGraph directed acyclic graph (DAG)** to orchestrate a **10-stage agent flow**. Each agent is a focused, single-responsibility unit that verifies the previous agent's work - creating a chain of accountability that makes every answer trustworthy.
 
 The pipeline adapts its depth based on the selected analysis mode:
 
@@ -275,8 +276,6 @@ Selects the best chart type for the result:
 | Two continuous metrics | Scatter plot |
 | Single value / KPI | Text card |
 
-
-
 <div align="center">
 <img src="docs/images/Screenshot%202026-04-12%20at%2015.17.35.png" alt="Auto-generated bar showing Average Credit Score by Region" width="80%"/>
 <br/><i>Auto Visualisation - bar showing Average Credit Score by Region using the Viz Recommender agent</i>
@@ -348,13 +347,42 @@ The corrected SQL is then re-executed. The retry counter is incremented in `Agen
 
 ---
 
+## 🎙 Voice Mode (Browser-Native)
+
+DataWhisperer supports a **fully browser-native voice flow** - both for asking questions and for hearing the answer read back. No external speech service, no API key, no audio ever leaves the user's device.
+
+### How it works
+
+| Step | Technology | What Happens |
+|---|---|---|
+| **Speech → Text (STT)** | [Web Speech API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API) (`SpeechRecognition` / `webkitSpeechRecognition`) | The user taps the mic button; the browser transcribes speech in real time and streams interim results into the chat input. When the user pauses, the final transcript is submitted to the agent pipeline exactly as if they had typed it. |
+| **Text → Speech (TTS)** | `window.speechSynthesis` + `SpeechSynthesisUtterance` | Once the Narrator Agent returns an answer, the narrative is sent to the browser's built-in TTS engine. The user can toggle auto-read-back on/off and interrupt playback at any time. |
+
+### Why this matters
+
+- **Privacy by default:** audio is processed locally by the browser; no recordings are uploaded to DataWhisperer's backend or any third-party service.
+- **Zero cost:** no Whisper, Deepgram, or ElevenLabs bills - the free tier stays free.
+- **Accessibility:** hands-free querying on mobile and desktop, plus spoken answers for users who prefer audio.
+- **Instant:** round-trip latency is dominated by the agent pipeline, not speech processing.
+
+### Browser support
+
+The voice feature uses standards-compliant Web Speech APIs. It works in:
+- ✅ **Chrome / Edge / Brave** (desktop + Android) - full support
+- ✅ **Safari** (macOS + iOS) - full support
+- ⚠️ **Firefox** - `speechSynthesis` works; `SpeechRecognition` is not yet enabled by default
+
+When an unsupported browser is detected, the mic button is hidden and typed input continues to work normally.
+
+---
+
 ## ⚙️ Analysis Modes
 
 | Mode | Pipeline Depth | LLM Calls | Use Case |
 |---|---|---|---|
 | **Quick** | 5 agents (no audit, no viz, no followup) | ~3 | Fast single-sentence answers; keyword lookups |
-| **Deep** | All 9 agents | ~7–8 | Full rigour: confidence score, charts, follow-ups |
-| **Compare** | All 9 agents + comparison-specific prompts | ~7–8 | Period-over-period or group-vs-group analysis |
+| **Deep** | All 10 agents | ~7–8 | Full rigour: confidence score, charts, follow-ups |
+| **Compare** | All 10 agents + comparison-specific prompts | ~7–8 | Period-over-period or group-vs-group analysis |
 
 Switch modes using the toggle in the chat input bar. Default is **Deep**.
 
@@ -367,12 +395,14 @@ Switch modes using the toggle in the chat input bar. Default is **Deep**.
 | **LLM** | Groq - Llama 3.3 70B Versatile | SQL generation, narration |
 | **LLM (support agents)** | Groq - Llama 3.1 8B Instant | Confidence scoring, assumptions audit, follow-ups |
 | **Agent Framework** | LangGraph 1.1+ | DAG pipeline orchestration |
-| **Backend API** | FastAPI | REST API, session management |
+| **Backend API** | FastAPI | REST API (`/api/*`), session management |
 | **Query Engine (files)** | DuckDB | In-memory CSV/Excel analytics |
 | **Query Engine (DBs)** | SQLAlchemy 2.0 | PostgreSQL, MySQL, SQLite |
 | **Frontend** | Next.js 14 (App Router) | SSR, routing |
-| **Styling** | Vanilla CSS | Glassmorphism dark theme |
+| **Styling** | Vanilla CSS | Glassmorphism dark theme, mobile-first responsive |
 | **Charts** | Recharts | Data visualisation |
+| **Voice (STT)** | Web Speech API (`SpeechRecognition`) | Browser-native speech-to-text |
+| **Voice (TTS)** | `window.speechSynthesis` | Browser-native text-to-speech |
 | **Deployment (frontend)** | Vercel | Edge CDN, CI/CD |
 | **Deployment (backend)** | Hugginge Face | Python server |
 | **License** | Apache 2.0 | Open source |
@@ -382,10 +412,11 @@ Switch modes using the toggle in the chat input bar. Default is **Deep**.
 ## 📁 Project Structure
 
 ```
-datawhisperer/
+datawhisperer-natwest/
 │
 ├── backend/                         # FastAPI application
 │   ├── agents/                      # LangGraph agent nodes
+│   │   ├── __init__.py
 │   │   ├── graph.py                 # Pipeline DAG definition & routing logic
 │   │   ├── agent_state.py           # Shared state schema (TypedDict)
 │   │   ├── semantic_agent.py        # Intent resolution & source selection
@@ -396,96 +427,132 @@ datawhisperer/
 │   │   ├── narrator_agent.py        # Business narrative generation
 │   │   └── followup_agent.py        # Contextual follow-up suggestions
 │   │
-│   ├── routers/                     # FastAPI route handlers
-│   │   ├── auth.py                  # Login / session endpoints
-│   │   ├── chat.py                  # /chat/query - main pipeline trigger
-│   │   ├── sources.py               # Data source connect/disconnect/list
-│   │   └── export.py                # CSV export endpoint
+│   ├── routers/                     # FastAPI route handlers (mounted under /api)
+│   │   ├── __init__.py
+│   │   ├── auth.py                  # /api/auth/* - login / session endpoints
+│   │   ├── chat.py                  # /api/chat/query - main pipeline trigger
+│   │   ├── sources.py               # /api/sources/* - connect / upload / list / disconnect
+│   │   ├── export.py                # /api/export/csv - result download
+│   │   └── voice.py                 # /api/voice/* - voice-session support endpoints
 │   │
 │   ├── services/                    # Core service layer
-│   │   ├── groq_client.py           # LLM client + key rotation pool
-│   │   ├── data_engine.py           # Query execution + cross-DB joins
-│   │   ├── db_connector.py          # Database connection & schema extraction
-│   │   ├── schema_extractor.py      # Table/column metadata utilities
-│   │   ├── metric_dictionary.py     # Business term → SQL mapping
-│   │   ├── viz_recommender.py       # Chart type selection logic
+│   │   ├── __init__.py
+│   │   ├── groq_client.py           # LLM client + Groq API key rotation pool
+│   │   ├── data_engine.py           # Query execution + cross-source registration
+│   │   ├── db_connector.py          # Database connection & driver routing
+│   │   ├── schema_extractor.py      # Table / column metadata extraction
+│   │   ├── schema_validator.py      # Schema compatibility & column-type checks
+│   │   ├── metric_dictionary.py     # Business term → SQL expression mapping
+│   │   ├── viz_recommender.py       # Chart-type selection logic
 │   │   ├── session_store.py         # In-memory session management
 │   │   ├── source_store.py          # Connected source registry
-│   │   ├── error_reporter.py        # Email error reporting
-│   │   └── masker.py                # Connection string masking
+│   │   └── error_reporter.py        # Error reporting utility
 │   │
 │   ├── models/
-│   │   └── schemas.py               # Pydantic request/response models
+│   │   ├── __init__.py
+│   │   └── schemas.py               # Pydantic request / response models
 │   │
 │   ├── middleware/
+│   │   ├── __init__.py
 │   │   └── auth.py                  # Session token validation
 │   │
 │   ├── utils/
+│   │   ├── __init__.py
 │   │   ├── logger.py                # Structured logging setup
-│   │   └── masker.py                # Credential masking utilities
+│   │   └── masker.py                # Credential & connection-string masking
 │   │
-│   ├── tests/                       # Backend test suite
+│   ├── tests/                       # Backend test suite (pytest)
+│   │   ├── __init__.py
 │   │   ├── test_agents.py           # Agent pipeline unit tests
 │   │   ├── test_data_engine.py      # Query execution tests
 │   │   └── test_sources.py          # Source connection tests
 │   │
 │   ├── scripts/
+│   │   ├── .env.example
 │   │   └── init_demo_db.py          # SQLite demo database initializer
 │   │
-│   ├── main.py                      # FastAPI app entry point
+│   ├── seed_aiven.py                # Seed demo data into an Aiven-hosted DB
+│   ├── seed_supabase.py             # Seed demo data into a Supabase Postgres DB
+│   ├── seed_tidb.py                 # Seed demo data into a TiDB Cloud instance
+│   ├── seed_turso.py                # Seed demo data into a Turso / libSQL instance
+│   │
+│   ├── main.py                      # FastAPI app entry point (mounts /api routers)
 │   ├── run.py                       # Dev runner
-│   ├── Dockerfile                   # Backend container
+│   ├── Dockerfile                   # Backend container image
 │   └── .env.example                 # Environment variable template
 │
 ├── frontend/                        # Next.js 14 application
 │   ├── app/                         # App Router pages
+│   │   ├── layout.tsx               # Root layout
 │   │   ├── page.tsx                 # Landing / redirect
+│   │   ├── globals.css              # Global styles (dark theme, glassmorphism)
 │   │   ├── auth/page.tsx            # Login page
-│   │   ├── chat/page.tsx            # Main chat interface
+│   │   ├── chat/page.tsx            # Main chat interface (desktop + mobile)
 │   │   ├── sources/page.tsx         # Data source management
 │   │   └── history/page.tsx         # Query history
 │   │
 │   ├── components/
 │   │   ├── AddSourceWizard.tsx      # Multi-step source connection UI
-│   │   └── OnboardingGuide.tsx      # First-time user walkthrough
+│   │   ├── OnboardingGuide.tsx      # First-time user walkthrough
+│   │   ├── ConfirmationGate.tsx     # Pre-query confirmation step (used by voice flow)
+│   │   ├── TalkButton.tsx           # Mic button for voice input
+│   │   └── VoiceStatusBar.tsx       # Live transcript & playback status bar
 │   │
 │   ├── hooks/
-│   │   ├── useChat.ts               # Chat state management
 │   │   ├── useAuth.ts               # Authentication state
-│   │   └── useOnboarding.tsx        # Onboarding flow state
+│   │   ├── useChat.ts               # Chat state management
+│   │   ├── useOnboarding.tsx        # Onboarding flow state
+│   │   ├── useWebSpeech.ts          # Thin wrapper around SpeechRecognition + speechSynthesis
+│   │   └── useVoice.ts              # Voice-session orchestration (STT → query → TTS)
 │   │
 │   ├── lib/
-│   │   ├── api.ts                   # Typed API client
+│   │   ├── api.ts                   # Typed API client (targets /api/* routes)
 │   │   └── types.ts                 # TypeScript type definitions
 │   │
-│   ├── public/sample/               # Sample CSV files for demo
-│   │   ├── employees.csv
-│   │   └── sales_data.csv
+│   ├── styles/
+│   │   └── mobile.css               # Mobile-specific overrides & safe-area insets
 │   │
-│   ├── package.json
+│   ├── public/
+│   │   └── sample/                  # Sample CSVs available in the source picker
+│   │       ├── employees.csv
+│   │       └── sales_data.csv
+│   │
+│   ├── Dockerfile                   # Frontend container image
 │   ├── next.config.mjs
+│   ├── next-env.d.ts
+│   ├── postcss.config.js
 │   ├── tailwind.config.ts
 │   ├── tsconfig.json
+│   ├── vercel.json                  # Vercel deployment config
+│   ├── package.json
+│   ├── package-lock.json
 │   └── .env.example
 │
 ├── sample_data/                     # Banking demo datasets (CSV)
 │   ├── bank_transactions.csv        # Transaction records
 │   ├── customer_accounts.csv        # Account balances
 │   ├── fraud_alerts.csv             # Fraud detection logs
-│   ├── loan_portfolio.csv           # Loan status breakdown
-│   └── monthly_revenue.csv          # Revenue time series
+│   ├── loan_portfolio.csv           # Loan portfolio records
+│   └── monthly_revenue.csv          # Monthly revenue time series
+│
+├── scratch/                         # Throwaway / experimentation scripts
+│   ├── test_json_parsing.py
+│   └── test_naming_sync.py
 │
 ├── docs/                            # Additional documentation
 │   ├── architecture.md              # Detailed architecture notes
-│   └── images/                      # README images (upload here)
+│   └── images/                      # README images
 │
-├── docker-compose.yml               # Full stack orchestration
+├── docker-compose.yml               # Full-stack orchestration
 ├── Dockerfile                       # Root Dockerfile (backend)
+├── DEPLOYMENT_GUIDE.md              # Free-tier deployment guide (HF Spaces + Vercel)
+├── requirements.txt                 # Python dependencies
 ├── .env.example                     # Root environment template
+├── .dockerignore
 ├── .gitignore
-│── requirements.txt                 # Python dependencies
+├── .vercelignore
 ├── LICENSE                          # Apache 2.0
-└── README.md                        ← you are here
+└── README.md                       ← you are here
 ```
 
 ---
@@ -497,6 +564,7 @@ datawhisperer/
 - **Python 3.11+**
 - **Node.js 20+**
 - **One or more free Groq API keys** - get them at [console.groq.com](https://console.groq.com) (no credit card needed)
+- **A modern browser** (Chrome, Edge, Safari) if you want to use the voice feature
 
 ---
 
@@ -536,7 +604,7 @@ Start the backend:
 uvicorn main:app --reload --port 8000
 ```
 
-API will be live at `http://localhost:8000`
+API will be live at `http://localhost:8000` (all app routes are mounted under `/api`)
 Interactive docs at `http://localhost:8000/docs`
 
 #### 3. Frontend setup
@@ -574,7 +642,7 @@ docker-compose up --build
 | Service | URL |
 |---|---|
 | Frontend | http://localhost:3000 |
-| Backend API | http://localhost:8000 |
+| Backend API | http://localhost:8000/api |
 | API Docs (Swagger) | http://localhost:8000/docs |
 
 ---
@@ -596,9 +664,12 @@ GROQ_API_KEYS=gsk_key1_here,gsk_key2_here,gsk_key3_here
 ### Frontend (`frontend/.env.local`)
 
 ```env
-# Point to your deployed backend or leave as localhost for development
+# Point to your deployed backend or leave as localhost for development.
+# The frontend API client automatically appends the /api prefix to all requests.
 NEXT_PUBLIC_API_URL=http://localhost:8000
 ```
+
+> **Note on voice:** No configuration is required for voice mode. The feature uses the browser's built-in Web Speech API (`SpeechRecognition`) and `speechSynthesis` - there are no keys to set, no services to enable, and no audio is ever sent to the backend.
 
 ### API Key Rotation - How It Works
 
@@ -683,7 +754,7 @@ Narrator:       "Q2 saw 23 fraud alerts, a 15% increase from Q1's 20 alerts.
 ### Example API Call
 
 ```bash
-curl -X POST http://localhost:8000/chat/query \
+curl -X POST http://localhost:8000/api/chat/query \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer <your-session-token>" \
   -d '{
@@ -718,18 +789,20 @@ curl -X POST http://localhost:8000/chat/query \
 
 ## 📡 API Reference
 
+All application routes are served under the `/api` prefix. Interactive Swagger docs are at `/docs`.
+
 | Method | Endpoint | Description |
 |---|---|---|
-| `POST` | `/auth/login` | Create a session (demo auth) |
-| `POST` | `/auth/logout` | Destroy the session |
-| `POST` | `/sources/connect` | Connect a new data source |
-| `POST` | `/sources/upload` | Upload a CSV or Excel file |
-| `GET` | `/sources/list` | List connected sources for a session |
-| `DELETE` | `/sources/{source_id}` | Disconnect a source |
-| `POST` | `/chat/query` | Run a natural language query (main pipeline) |
-| `GET` | `/chat/history` | Retrieve conversation history |
-| `GET` | `/export/csv` | Download last result as CSV |
-| `GET` | `/health` | Health check |
+| `POST` | `/api/auth/login` | Create a session (demo auth) |
+| `POST` | `/api/auth/logout` | Destroy the session |
+| `POST` | `/api/sources/connect` | Connect a new data source |
+| `POST` | `/api/sources/upload` | Upload a CSV or Excel file |
+| `GET` | `/api/sources/list` | List connected sources for a session |
+| `DELETE` | `/api/sources/{source_id}` | Disconnect a source |
+| `POST` | `/api/chat/query` | Run a natural language query (main pipeline) |
+| `GET` | `/api/chat/history` | Retrieve conversation history |
+| `GET` | `/api/export/csv` | Download last result as CSV |
+| `GET` | `/api/health` | Health check |
 | `GET` | `/docs` | Interactive Swagger UI |
 
 ---
@@ -818,6 +891,7 @@ pytest tests/ --cov=. --cov-report=term-missing
 - **Results capped at 500 rows.** Large result sets are silently truncated with no pagination.
 - **Basic visualisations.** Limited to bar, line, pie, and scatter charts - no heatmaps, stacked charts, or user customisation.
 - **Free-tier LLM dependency.** Relies on Groq's free tier; heavy usage can exhaust all pooled keys simultaneously.
+- **Voice requires a compatible browser.** STT uses the Web Speech API, which is not enabled by default in Firefox; on unsupported browsers the mic button is hidden and typed input continues to work normally.
  
 ---
  
@@ -831,6 +905,7 @@ pytest tests/ --cov=. --cov-report=term-missing
 - **Richer visualisations** - histograms, heatmaps, grouped charts, and user-customisable styling.
 - **Conversation memory** - persist history so follow-up questions work across sessions.
 - **Caching and monitoring** - cache frequent queries and track confidence scores, retry rates, and errors in production.
+- **Server-side voice option** - optional Whisper/Deepgram backend for users whose browsers lack Web Speech API support.
  
 
 

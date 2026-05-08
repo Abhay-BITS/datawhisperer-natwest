@@ -14,12 +14,11 @@
 [![Node.js](https://img.shields.io/badge/Node.js-20%2B-green.svg)](https://nodejs.org)
 [![LangGraph](https://img.shields.io/badge/LangGraph-1.1%2B-orange.svg)](https://langchain-ai.github.io/langgraph/)
 [![Groq](https://img.shields.io/badge/LLM-Groq%20%7C%20Llama%203.3%2070B-yellow.svg)](https://console.groq.com)
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-datawhisperer--natwest.vercel.app-brightgreen.svg)](https://datawhisperer-natwest.vercel.app)
 [![NatWest Hackathon](https://img.shields.io/badge/NatWest-Code%20for%20Purpose%202026-purple.svg)](https://natwestgroup.com)
 
 <br/>
 
-[🌐 Live Demo](https://datawhisperer-natwest.vercel.app) · [📖 Architecture Docs](docs/architecture.md) · [🚀 Quick Start](#-quick-start)
+[ [📖 Architecture Docs](docs/architecture.md) · [🚀 Quick Start](#-quick-start)
 
 </div>
 
@@ -66,7 +65,6 @@ Type a question in plain English - or **speak it aloud** - and receive a clear, 
 
 ## 🌐 Live Demo
 
-**Hosted at:** [https://datawhisperer-natwest.vercel.app](https://datawhisperer-natwest.vercel.app)
 
 <!-- 📸 IMAGE SLOT 2 - DEMO GIF or SCREENSHOT
      Upload an animated GIF or PNG of the main chat interface to: docs/images/demo.gif
@@ -78,9 +76,6 @@ Type a question in plain English - or **speak it aloud** - and receive a clear, 
 <img src="docs/images/Video%20Project%201%20(1).gif" alt="DataWhisperer Demo - typing a query and seeing the Trust Trace" width="85%"/>
 </div>
 
-**Demo credentials (no sign-up needed):**
-- Username: `demo` (any username works)
-- Password: `demo` (any password works - demo auth)
 
 **Try these queries on the built-in banking dataset:**
 ```

@@ -18,7 +18,7 @@
 
 <br/>
 
-[ [📖 Architecture Docs](docs/architecture.md) · [🚀 Quick Start](#-quick-start)
+[📖 Architecture Docs](docs/architecture.md) · [🚀 Quick Start](#-quick-start)
 
 </div>
 
